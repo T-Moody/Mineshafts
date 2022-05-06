@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Mineshafts.Patches
 {
     [HarmonyPatch(typeof(EnvMan), nameof(EnvMan.Awake))]
-    public static class AddEnvPatch
+    public static class AddEnv
     {
         public static void Postfix()
         {

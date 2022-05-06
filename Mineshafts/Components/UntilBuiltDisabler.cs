@@ -18,9 +18,10 @@ namespace Mineshafts.Components
             piece = this.GetComponent<Piece>();
         }
     
-        public void Update()
+        public void FixedUpdate()
         {
-            if (piece.m_creator != (long)0)
+            if(this.GetComponent<ZNetView>() != null)
+            //if (piece.m_creator != (long)0)
             {
                 keepDisabledUntilBuilt.ForEach(go => go.SetActive(true));
                 this.enabled = false;

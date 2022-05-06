@@ -5,6 +5,7 @@ using System.Reflection;
 using Mineshafts.Configuration;
 using System.IO;
 using System.Linq;
+using UnityEngine;
 
 namespace Mineshafts
 {
@@ -19,21 +20,22 @@ namespace Mineshafts
         public static ManualLogSource log;
 
         public static int gridSize = 3;
-        public static int gridMaxHeight = Util.RoundToNearestGridPoint(8000);
-        public static int gridMinHeight = Util.RoundToNearestGridPoint(7000);
+        public static int gridMaxHeight = Util.RoundToNearestGridPoint(8000); //8001
+        public static int gridMinHeight = Util.RoundToNearestGridPoint(7000); //6999, 7500 center
 
         public static string assetBundleName = "mineshafts";
-        public static string configName = "Mineshafts.cfg";
+        public static string configName = GUID + ".cfg";
 
         public static Localization localizationInstance;
         public static Main instance;
 
         void Awake()
         {
-            instance = this;
-
-            new Harmony(GUID).PatchAll(Assembly.GetExecutingAssembly());
             log = Logger;
+
+            instance = this;
+            
+            new Harmony(GUID).PatchAll(Assembly.GetExecutingAssembly());
 
             ModConfig.Setup();
 

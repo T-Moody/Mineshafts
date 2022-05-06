@@ -92,6 +92,7 @@
   <ItemGroup>
     <Compile Include="Components\MineExit.cs" />
     <Compile Include="Components\MineEntrance.cs" />
+    <Compile Include="MineshaftGenerator.cs" />
     <Compile Include="Components\MineTileDestructible.cs" />
     <Compile Include="Components\UntilBuiltDisabler.cs" />
     <Compile Include="Configuration\GeneralConfig.cs" />
@@ -102,12 +103,15 @@
     <Compile Include="Configuration\VeinConfig.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Components\MineTile.cs" />
-    <Compile Include="Patches\AddEnvPatch.cs" />
-    <Compile Include="Patches\AllowBuildingInMinesPatch.cs" />
-    <Compile Include="Patches\GetLocalizationInstancePatch.cs" />
-    <Compile Include="Patches\MineWallHitAdjustmentPatch.cs" />
-    <Compile Include="Patches\ObjectDbAwakePatch.cs" />
-    <Compile Include="Patches\PreventEnvSpamPatch.cs" />
+    <Compile Include="Patches\AddEnv.cs" />
+    <Compile Include="Patches\AddLocationsPatch.cs" />
+    <Compile Include="Patches\AllowBuildingInMines.cs" />
+    <Compile Include="Patches\GetLocalizationInstance.cs" />
+    <Compile Include="Patches\MineWallHitAdjustment.cs" />
+    <Compile Include="Patches\ObjectDbAwake.cs" />
+    <Compile Include="Patches\RaisePathfindingHeightLimit.cs" />
+    <Compile Include="Patches\PreventEnvSpam.cs" />
+    <Compile Include="Patches\TriggerMineshaftGeneration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -4,7 +4,15 @@ namespace Mineshafts.Components
 {
     public class MineEntrance : MonoBehaviour
     {
-        public void OnEnable()
+        private void OnEnable()
+        {
+            if (transform.position.y >= Main.gridMinHeight)
+            {
+                Align();
+            }
+        }
+
+        public void Align()
         {
             var t = transform;
             if (t.position.y >= Main.gridMinHeight)

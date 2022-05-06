@@ -3,7 +3,7 @@
 namespace Mineshafts.Patches
 {
     [HarmonyPatch(typeof(FejdStartup), nameof(FejdStartup.Start))]
-    public static class GetLocalizationInstancePatch
+    public static class GetLocalizationInstance
     {
         static void Postfix()
         {

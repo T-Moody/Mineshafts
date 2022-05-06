@@ -81,41 +81,36 @@ namespace Mineshafts.Components
 			{
 				currentHealth = ModConfig.general.wall_health;
 
-				var posToSpawnOn = parentTile.transform.position + t.forward * Main.gridSize;
+				var posToSpawnOn = Util.ConvertVector3ToGridAligned(parentTile.transform.position + t.forward * Main.gridSize);
 				var tile = Util.InstantiateTileOnGrid(posToSpawnOn);
 
-				if (tile != null)
-                {
-					var newTileTransform = tile.transform;
+				parentTile.onDestroyEffects.ForEach(effect => GameObject.Instantiate(effect, posToSpawnOn, Quaternion.identity));
 
-					parentTile.onDestroyEffects.ForEach(effect => GameObject.Instantiate(effect, newTileTransform.position, Quaternion.identity));
-
-					var defaultDrop = ZNetScene.instance.GetPrefab(ModConfig.general.default_drop);
-					if (defaultDrop != null)
+				var defaultDrop = ZNetScene.instance.GetPrefab(ModConfig.general.default_drop);
+				if (defaultDrop != null)
+				{
+					var dropAmount = UnityEngine.Random.Range(ModConfig.general.default_drop_min, ModConfig.general.default_drop_max);
+					if (dropAmount > 0)
 					{
-						var dropAmount = UnityEngine.Random.Range(ModConfig.general.default_drop_min, ModConfig.general.default_drop_max);
+						var spawnedDrop = Util.InstantiateOnGrid(defaultDrop, posToSpawnOn);
+						spawnedDrop.GetComponent<ItemDrop>()?.SetStack(dropAmount);
+					}
+				}
+
+				var vein = ModConfig.GetVeinConfigForPosition(posToSpawnOn);
+				if (vein != null)
+				{
+					var veinDrop = ZNetScene.instance.GetPrefab(vein.drop);
+					if (veinDrop != null)
+					{
+						var dropAmount = UnityEngine.Random.Range(vein.drop_min, vein.drop_max);
 						if (dropAmount > 0)
 						{
-							var spawnedDrop = Util.InstantiateOnGrid(defaultDrop, newTileTransform.position);
+							var spawnedDrop = Util.InstantiateOnGrid(veinDrop, posToSpawnOn);
 							spawnedDrop.GetComponent<ItemDrop>()?.SetStack(dropAmount);
-						}					
-					}
-
-					var vein = ModConfig.GetVeinConfigForPosition(newTileTransform.position);
-					if(vein != null)
-                    {
-						var veinDrop = ZNetScene.instance.GetPrefab(vein.drop);
-						if (veinDrop != null)
-						{
-							var dropAmount = UnityEngine.Random.Range(vein.drop_min, vein.drop_max);
-							if (dropAmount > 0)
-							{
-								var spawnedDrop = Util.InstantiateOnGrid(veinDrop, newTileTransform.position);
-								spawnedDrop.GetComponent<ItemDrop>()?.SetStack(dropAmount);
-							}
 						}
 					}
-                }
+				}
 			}
 
 			zdo.Set(HealthZdoString, currentHealth);

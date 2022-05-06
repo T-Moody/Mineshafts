@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Mineshafts.Patches
 {
     [HarmonyPatch(typeof(ObjectDB), nameof(ObjectDB.Awake))]
-    public static class ObjectDbAwakePatch
+    public static class ObjectDbAwake
     {
         public static void Postfix(ObjectDB __instance)
         {

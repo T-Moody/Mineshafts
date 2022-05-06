@@ -3,7 +3,7 @@
 namespace Mineshafts.Patches
 {
 	[HarmonyPatch(typeof(Player), nameof(Player.UpdatePlacementGhost))]
-    public static class AllowBuildingInMinesPatch
+    public static class AllowBuildingInMines
     {
 		public static void Prefix(Player __instance)
         {

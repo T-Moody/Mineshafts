@@ -1,5 +1,6 @@
 ﻿using Mineshafts.Components;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Mineshafts
 {
@@ -9,16 +10,19 @@ namespace Mineshafts
 
         private static Queue<MineTile> singleUpdateQueue = new Queue<MineTile>();
         private static Queue<MineTile> updateNearQueue = new Queue<MineTile>();
+        private static Queue<Vector3> placementQueue = new Queue<Vector3>();
 
         public static int maximumBatchSize = 10;
 
         public static void RequestUpdateAll()
         {
-            //if (activeCoroutine != null) Main.instance.StopCoroutine(activeCoroutine);
-            //activeCoroutine =  Main.instance.StartCoroutine(UpdateAllTiles());
-
             singleUpdateQueue.Clear();
             activeTiles.ForEach(t => singleUpdateQueue.Enqueue(t));
+        }
+
+        public static void RequestPlacement(Vector3 tileToPlace)
+        {
+            placementQueue.Enqueue(tileToPlace);
         }
 
         public static void RequestNearUpdate(MineTile tileToUpdate)
@@ -41,24 +45,20 @@ namespace Mineshafts
         {
             if (updateNearQueue.Count > 0)
             {
-                var batchSize = updateNearQueue.Count > maximumBatchSize ? maximumBatchSize : updateNearQueue.Count;
-                for (int i = 0; i < batchSize; i++)
-                {
-                    var tile = updateNearQueue.Dequeue();
-                    if (!tile || tile == null) continue;
-                    tile.UpdateNear();
-                }
+                var tile = updateNearQueue.Dequeue();
+                if (tile || tile != null) tile.UpdateNear();
             }
 
             if (singleUpdateQueue.Count > 0)
             {
-                var batchSize = singleUpdateQueue.Count > maximumBatchSize ? maximumBatchSize : singleUpdateQueue.Count;
-                for (int i = 0; i < batchSize; i++)
-                {
-                    var tile = singleUpdateQueue.Dequeue();
-                    if (!tile || tile == null) continue;
-                    tile.UpdateAdjacency();
-                }
+                var tile = singleUpdateQueue.Dequeue();
+                if (tile || tile != null) tile.UpdateAdjacency();
+            }
+
+            if (placementQueue.Count > 0)
+            {
+                var tile = placementQueue.Dequeue();
+                Util.InstantiateTileOnGrid(tile);
             }
         }
     }

@@ -49,9 +49,11 @@ namespace Mineshafts
         public static GameObject InstantiateTileOnGrid(Vector3 position)
         {
             var alignedPos = ConvertVector3ToGridAligned(position);
+            if (!IsPosWithinGridConstraints(alignedPos)) return null;
 
             if (GetTilesInArea(alignedPos).Find(tile => SameTile(tile.transform.position, position)) != null)
             {
+                Main.log.LogWarning($"cancelled attempt to spawn a tile in position {position} where one already exists");
                 return null;
             }
 
@@ -68,7 +70,6 @@ namespace Mineshafts
         public static GameObject InstantiateOnGrid(GameObject go, Vector3 position)
         {
             var alignedPos = ConvertVector3ToGridAligned(position);
-            if (!IsPosWithinGridConstraints(alignedPos)) return null;
 
             var instantiatedGo = GameObject.Instantiate(go, alignedPos, Quaternion.identity);
             return instantiatedGo;

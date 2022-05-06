@@ -8,7 +8,7 @@ using System.Linq;
 namespace Mineshafts.Patches
 {
     [HarmonyPatch(typeof(Attack), nameof(Attack.AddHitPoint))]
-    public static class MineWallHitAdjustmentPatch
+    public static class MineWallHitAdjustment
     {
         public static void Postfix(List<Attack.HitPoint> list)
         {

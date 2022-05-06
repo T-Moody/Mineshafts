@@ -111,6 +111,17 @@ namespace Mineshafts.Components
 
 			var surroundingTiles = Util.GetTilesInArea(transform.position);
 
+			//if a tile exists in the same spot destroy this one
+			if (surroundingTiles.Find(s =>
+				s.transform.position.x == thisTile.position.x &&
+				s.transform.position.y == thisTile.position.y &&
+				s.transform.position.z == thisTile.position.y &&
+				s != this))
+			{
+				UnityEngine.Object.Destroy(thisTile);
+				return;
+			}
+
 			//north - same x, same y, higher z
 			northAdjacent = surroundingTiles.Find(surroundingTile => 
 				surroundingTile.transform.position.x == thisTile.position.x && 
