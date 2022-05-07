@@ -92,6 +92,7 @@
   <ItemGroup>
     <Compile Include="Components\MineExit.cs" />
     <Compile Include="Components\MineEntrance.cs" />
+    <Compile Include="Configuration\AbandonedMineshaftConfig.cs" />
     <Compile Include="MineshaftGenerator.cs" />
     <Compile Include="Components\MineTileDestructible.cs" />
     <Compile Include="Components\UntilBuiltDisabler.cs" />

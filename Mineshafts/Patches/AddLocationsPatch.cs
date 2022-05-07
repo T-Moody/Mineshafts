@@ -35,7 +35,7 @@ namespace Mineshafts.Patches
                 m_quantity = 200,
                 m_chanceToSpawn = 100,
                 m_minDistanceFromSimilar = 512,
-                m_randomRotation = true,
+                m_randomRotation = false,
                 m_maxTerrainDelta = 2,
                 m_minAltitude = 1,
                 m_maxAltitude = 1000

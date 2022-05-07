@@ -5,7 +5,6 @@ using System.Reflection;
 using Mineshafts.Configuration;
 using System.IO;
 using System.Linq;
-using UnityEngine;
 
 namespace Mineshafts
 {
@@ -27,14 +26,11 @@ namespace Mineshafts
         public static string configName = GUID + ".cfg";
 
         public static Localization localizationInstance;
-        public static Main instance;
 
         void Awake()
         {
             log = Logger;
 
-            instance = this;
-            
             new Harmony(GUID).PatchAll(Assembly.GetExecutingAssembly());
 
             ModConfig.Setup();

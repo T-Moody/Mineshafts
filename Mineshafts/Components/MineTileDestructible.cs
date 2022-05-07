@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections.Generic;
 using Mineshafts.Configuration;
 
 namespace Mineshafts.Components
@@ -81,8 +80,8 @@ namespace Mineshafts.Components
 			{
 				currentHealth = ModConfig.general.wall_health;
 
-				var posToSpawnOn = Util.ConvertVector3ToGridAligned(parentTile.transform.position + t.forward * Main.gridSize);
-				var tile = Util.InstantiateTileOnGrid(posToSpawnOn);
+				var posToSpawnOn = parentTile.transform.position + t.forward * Main.gridSize;
+				TileManager.RequestPlacement(posToSpawnOn);
 
 				parentTile.onDestroyEffects.ForEach(effect => GameObject.Instantiate(effect, posToSpawnOn, Quaternion.identity));
 

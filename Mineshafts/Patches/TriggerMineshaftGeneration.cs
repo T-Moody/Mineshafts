@@ -9,12 +9,19 @@ namespace Mineshafts.Patches
     {
         private static void Postfix(ZoneSystem.ZoneLocation location, Vector3 pos, ZoneSystem.SpawnMode mode)
         {
-            Main.log.LogWarning(location.m_prefabName + " " + mode.ToString());
+            if(!ZoneSystem.instance.IsZoneGenerated(ZoneSystem.instance.GetZone(pos)) &&
+                ZNet.instance.IsServer() &&
+                location.m_prefabName.StartsWith("MS_AbandonedMine", System.StringComparison.Ordinal))
+            {
+                //MineshaftGenerator.Generate(pos);
+            }
+
+            /*Main.log.LogWarning(location.m_prefabName + " " + mode.ToString());
 
             if(mode == ZoneSystem.SpawnMode.Full && location.m_prefabName.StartsWith("MS_AbandonedMine", System.StringComparison.Ordinal))
             {
-                MineshaftGenerator.Generate(pos);
-            }
+                
+            }*/
         }
 
         /*private static readonly MethodInfo GenerateDungeons = AccessTools.Method(typeof(TriggerMineshaftGeneration), nameof(TriggerMineshaftGeneration.Bruh));

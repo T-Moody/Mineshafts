@@ -13,7 +13,7 @@ namespace Mineshafts.Patches
             var il = instructions.ToList();
 
             for (int i = 0; i < il.Count; ++i)
-                if (il[i].opcode == OpCodes.Ldc_R4 && il[i].operand.ToString() == "6000")
+                if (il[i].opcode == OpCodes.Ldc_R4 && string.Equals(il[i].operand.ToString(), "6000", System.StringComparison.Ordinal))
                     il[i].operand = 9000f;
 
             return il.AsEnumerable();

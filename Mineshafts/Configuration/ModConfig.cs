@@ -20,6 +20,8 @@ namespace Mineshafts.Configuration
 
         public static List<PieceRecipeConfig> pieceRecipes = new List<PieceRecipeConfig>();
 
+        public static List<AbandonedMineshaftConfig> abandonedMineshafts = new List<AbandonedMineshaftConfig>();
+
         public static FileSystemWatcher fsw = new FileSystemWatcher()
         {
             Path = Paths.ConfigPath,
@@ -86,6 +88,22 @@ namespace Mineshafts.Configuration
             pieceRecipes = pieceRecs;
 
             //in future add item recipe config and load them here too
+        }
+
+        public static void LoadAbandonedMineshaftConfigs()
+        {
+            var parsed = ConfigParser.Parse(configString.Value);
+            var abMs =
+                parsed.Where(pair => pair.Key.StartsWith("abandoned_mineshaft", StringComparison.OrdinalIgnoreCase))
+                .Select(pieceRec => ConfigParser.ToObject<AbandonedMineshaftConfig>(pieceRec.Value)).ToList();
+            abandonedMineshafts = abMs;
+        }
+
+        public static List<AbandonedMineshaftConfig> GetAbandonedMineshaftConfigForBiome(string biome, bool includeGlobal = true)
+        {
+            var biomeConfigs = abandonedMineshafts.FindAll(abms => string.Equals(abms.biome, biome));
+            if (includeGlobal) biomeConfigs.AddRange(abandonedMineshafts.FindAll(abms => string.Equals(abms.biome, "Global")));
+            return biomeConfigs;
         }
 
         public static List<VeinConfig> GetVeinConfigsForBiome(string biome, bool includeGlobal = true)

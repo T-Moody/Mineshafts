@@ -9,7 +9,9 @@ namespace Mineshafts.Patches
         public static bool Prefix(object o)
         {
             var msg = o.ToString();
-            if (msg == "Setting forced environment MS_mine" || msg == "Setting forced environment ") return false;
+            if (string.Equals(msg, "Setting forced environment MS_mine", System.StringComparison.Ordinal) ||
+                string.Equals(msg, "Setting forced environment ", System.StringComparison.Ordinal)) 
+                return false;
             return true;
         }
     }
