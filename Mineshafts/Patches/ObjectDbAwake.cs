@@ -16,24 +16,45 @@ namespace Mineshafts.Patches
             {
                 var zns = ZNetScene.instance;
 
-                var mineTile = bundle.GetPrefab("MS_MineTile");
-                var entrance = bundle.GetPrefab("MS_Entrance");
-                var scaffold_big = bundle.GetPrefab("MS_scaffold_big");
+                var prefabList = new List<string>()
+                {
+                    "MS_MineTile",
+                    "MS_Entrance",
 
-                var hitEffect = bundle.GetPrefab("MS_FX_Tile_Hit");
-                var destroyedEffect = bundle.GetPrefab("MS_FX_Tile_Destroyed");
+                    "MS_FX_Tile_Destroyed",
+                    "MS_FX_Tile_Hit",
 
-                zns.AddPrefab(mineTile);
-                zns.AddPrefab(entrance);
-                zns.AddPrefab(scaffold_big);
-                zns.AddPrefab(hitEffect);
-                zns.AddPrefab(destroyedEffect);
+                    "MS_chest_T1",
+                    "MS_chest_T2",
+
+                    "MS_bonepile",
+
+                    "MS_woodstairs",
+                    "MS_woodstairs_damaged",
+                    "MS_woodwall_2x1",
+                    "MS_woodwall_2x1_damaged",
+                    "MS_woodwall_2x2",
+                    "MS_woodwall_2x2_damaged",
+                    "MS_woodwall_2x4",
+                    "MS_woodwall_2x4_damaged"
+                };
+
+                var hammerPrefabList = new List<string>()
+                {
+                    "MS_Entrance"
+                };
 
                 var hammer = zns.GetPrefab("Hammer");
                 var hammerPieces = hammer.GetComponent<ItemDrop>().m_itemData.m_shared.m_buildPieces.m_pieces;
-                hammerPieces.AddPiece(entrance);
-                hammerPieces.AddPiece(scaffold_big);
-                //if(hammerPieces.Find(piece => string.Equals(piece.name, entrance.name, System.StringComparison.Ordinal)) == null) hammerPieces.Add(entrance);
+
+                foreach(string prefabName in prefabList)
+                {
+                    var prefab = bundle.GetPrefab(prefabName);
+                    prefab.FixReferences();
+                    zns.AddPrefab(prefab);
+
+                    if (hammerPrefabList.Contains(prefabName)) hammerPieces.AddPiece(prefab);
+                }
 
                 ModConfig.pieceRecipes.ForEach(r => r.ApplyConfig());
             }

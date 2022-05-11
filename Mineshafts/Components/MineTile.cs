@@ -68,6 +68,7 @@ namespace Mineshafts.Components
 			this.m_firstFrame = false;
 
 			Util.AlignTransformToGrid(transform);
+			transform.eulerAngles = Vector3.zero;
 		}
 
 		public void Start()

@@ -14,13 +14,15 @@ namespace Mineshafts
         public const string MODNAME = "Mineshafts";
         public const string AUTHOR = "GoldenJude";
         public const string GUID = AUTHOR + "_" + MODNAME;
-        public const string VERSION = "1.0.0";
+        public const string VERSION = "1.0.0.1";
 
         public static ManualLogSource log;
 
         public static int gridSize = 3;
         public static int gridMaxHeight = Util.RoundToNearestGridPoint(8000); //8001
         public static int gridMinHeight = Util.RoundToNearestGridPoint(7000); //6999, 7500 center
+
+        public static int roomTheme = 1024;
 
         public static string assetBundleName = "mineshafts";
         public static string configName = GUID + ".cfg";

@@ -5,13 +5,14 @@ namespace Mineshafts.Components
     public class MineExit : MonoBehaviour
     {
 		public bool alwaysAlign = false;
+		public bool spawnEntryTile = false;
 
-		private void OnEnable()
+		private void Start()
 		{
 			if (transform.position.y < Main.gridMinHeight || alwaysAlign)
 			{
 				Align();
-				TryPlaceEntryTile();
+				if(spawnEntryTile)	TryPlaceEntryTile();
 			}
 		}
 

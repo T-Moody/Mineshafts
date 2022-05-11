@@ -27,6 +27,11 @@ namespace Mineshafts.Patches
             env.m_fogColorSunEvening = envColor;
             env.m_fogColorSunNight = envColor;
 
+            env.m_sunColorDay = envColor;
+            env.m_sunColorEvening = envColor;
+            env.m_sunColorMorning = envColor;
+            env.m_sunColorNight = envColor;
+
             EnvMan.instance.m_environments.Add(env);
         }
     }

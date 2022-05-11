@@ -17,13 +17,10 @@ namespace Mineshafts.Components
         public void Align()
         {
             var t = transform;
-            if (t.position.y >= Main.gridMinHeight)
-            {
-                var groundHeight = ZoneSystem.instance.GetGroundHeight(transform.position);
-                var pos = t.position;
-                pos.y = groundHeight;
-                t.position = pos;
-            }
+            var groundHeight = ZoneSystem.instance.GetGroundHeight(transform.position);
+            var pos = t.position;
+            pos.y = groundHeight;
+            t.position = pos;
         }
     }
 }

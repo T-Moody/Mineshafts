@@ -14,7 +14,7 @@ namespace Mineshafts.Patches
 
             for (int i = 0; i < il.Count; ++i)
                 if (il[i].opcode == OpCodes.Ldc_R4 && string.Equals(il[i].operand.ToString(), "6000", System.StringComparison.Ordinal))
-                    il[i].operand = 9000f;
+                    il[i].operand = 10000f;
 
             return il.AsEnumerable();
 
