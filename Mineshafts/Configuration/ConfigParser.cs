@@ -28,7 +28,7 @@ namespace Mineshafts.Configuration
                 var trimmedLine = new string(trim.ToArray());
 
                 if (trimmedLine.Length == 0) continue;//skip empty lines
-                if (trimmedLine.StartsWith(@"//")) continue;//skip lines of comments
+                if (trimmedLine.StartsWith("#", StringComparison.Ordinal)) continue;//skip lines of comments
 
                 if (trimmedLine.IndexOf('[') != -1 && trimmedLine.IndexOf('=') == -1)
                 {

@@ -20,6 +20,7 @@ namespace Mineshafts.Patches
                 "MS_R_room_1",
                 "MS_R_room_2",
                 "MS_R_room_3",
+                "MS_R_room_4",
                 "MS_R_tunnel_1",
                 "MS_R_excavation_1",
                 "MS_R_excavation_2",
@@ -46,27 +47,6 @@ namespace Mineshafts.Patches
                         instantiatedRoom.GetComponent<Room>().m_theme = (Room.Theme)Main.roomTheme;
                     }
                 }
-
-                /*var bruh = UnityEngine.Object.Instantiate(mineshaftRooms, valheimRoomsParent);
-                var bruhTransform = bruh.transform;
-
-                Main.log.LogWarning(bruhTransform.childCount);
-
-                for (int i = 0; i < 4; i++)
-                {
-                    Main.log.LogWarning(i);
-                    var child = bruhTransform.GetChild(i);
-                    Main.log.LogWarning(child);
-
-                    child.parent = valheimRoomsParent;
-                    //child.GetComponent<Room>().m_theme = (Room.Theme)Main.roomTheme;
-                    child.gameObject.name = Utils.GetPrefabName(child.gameObject);
-
-                    
-                }
-
-                UnityEngine.Object.DestroyImmediate(bruh);*/
-
                 bundle.Unload(false);
             }
         }

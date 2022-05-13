@@ -14,11 +14,14 @@ namespace Mineshafts.Configuration
         public static CustomSyncedValue<string> configString = new CustomSyncedValue<string>(ModConfig.sync, Main.MODNAME);
 
         public static GeneralConfig general = new GeneralConfig();
+
+        public static AbandonedMineshaftConfig abandonedMineshaft = new AbandonedMineshaftConfig();
+
+        public static List<PieceRecipeConfig> pieceRecipes = new List<PieceRecipeConfig>();
+
         public static LocalizationConfig localization = new LocalizationConfig();
 
         public static List<VeinConfig> veins = new List<VeinConfig>();
-
-        public static List<PieceRecipeConfig> pieceRecipes = new List<PieceRecipeConfig>();
 
         public static FileSystemWatcher fsw = new FileSystemWatcher()
         {
@@ -35,6 +38,7 @@ namespace Mineshafts.Configuration
                 ModConfig.localization.InsertLocalization();
                 TileManager.RequestUpdateAll();
                 pieceRecipes.ForEach(r => r.ApplyConfig());
+                abandonedMineshaft.Apply();
             };
 
             fsw.Changed += (object sender, FileSystemEventArgs e) =>
@@ -51,24 +55,25 @@ namespace Mineshafts.Configuration
         public static void LoadConfigs()
         {
             LoadGeneralConfig();
+            LoadAbandonedMineshaft();
+            LoadRecipes();
             LoadLocalization();
             LoadVeinConfigs();
-            LoadRecipes();
         }
 
-        public static void LoadGeneralConfig()
+        private static void LoadGeneralConfig()
         {
             var parsed = ConfigParser.Parse(configString.Value);
             general = ConfigParser.ToObject<GeneralConfig>(parsed["general"]);
         }
 
-        public static void LoadLocalization()
+        private static void LoadLocalization()
         {
             var parsed = ConfigParser.Parse(configString.Value);
             localization = ConfigParser.ToObject<LocalizationConfig>(parsed["localization"]);
         }
 
-        public static void LoadVeinConfigs()
+        private static void LoadVeinConfigs()
         {
             var parsed = ConfigParser.Parse(configString.Value);
             var veinConfigs = parsed
@@ -77,7 +82,7 @@ namespace Mineshafts.Configuration
             veins = veinConfigs; 
         }
 
-        public static void LoadRecipes()
+        private static void LoadRecipes()
         {
             var parsed = ConfigParser.Parse(configString.Value);
             var pieceRecs =
@@ -86,6 +91,12 @@ namespace Mineshafts.Configuration
             pieceRecipes = pieceRecs;
 
             //in future add item recipe config and load them here too
+        }
+
+        private static void LoadAbandonedMineshaft()
+        {
+            var parsed = ConfigParser.Parse(configString.Value);
+            abandonedMineshaft = ConfigParser.ToObject<AbandonedMineshaftConfig>(parsed["abandoned_mineshaft"]);
         }
 
         public static List<VeinConfig> GetVeinConfigsForBiome(string biome, bool includeGlobal = true)

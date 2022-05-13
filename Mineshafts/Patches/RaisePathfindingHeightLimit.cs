@@ -17,16 +17,6 @@ namespace Mineshafts.Patches
                     il[i].operand = 10000f;
 
             return il.AsEnumerable();
-
-            /*foreach (CodeInstruction i in instructions)
-            {
-                if (i.opcode == OpCodes.Ldc_R4 && i.operand.ToString() == "6000") i.operand = 8000f;
-
-                Main.log.LogWarning(i.opcode.Name + " - " + i.opcode.Value);
-                Main.log.LogWarning(i.operand?.ToString());
-            }
-
-            return instructions;*/
         }
     }
 }

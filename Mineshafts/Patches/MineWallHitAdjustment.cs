@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using Mineshafts.Components;
 using System.Collections.Generic;
 using System.Linq;
 
