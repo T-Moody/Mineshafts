@@ -7,11 +7,11 @@ namespace Mineshafts.Components
     public class MineTileDestructible : MonoBehaviour, IDestructible
     {
 		public string zdoName = string.Empty;
+		public float health = ModConfig.general.wall_health;
 
 		public MineTile parentTile;
 
 		private string DamageRpcString => "damage_" + zdoName;
-		private string HealthZdoString => "health_" + zdoName;
 
 		public void Awake()
 		{
@@ -19,6 +19,7 @@ namespace Mineshafts.Components
 			{
 				parentTile.znview.Register(DamageRpcString, new Action<long, HitData>(RPC_Damage));
 			}
+			health = ModConfig.general.wall_health;
 		}
 
 		public void Damage(HitData hit)
@@ -43,8 +44,6 @@ namespace Mineshafts.Components
 			{
 				return;
 			}
-
-			var zdo = parentTile.znview.GetZDO();
 			var t = transform;
 
 			if(t.position.y + Main.gridSize > Main.gridMaxHeight || t.position.y - Main.gridSize < Main.gridMinHeight)
@@ -52,9 +51,6 @@ namespace Mineshafts.Components
 				DamageText.instance.ShowText(DamageText.TextType.Immune, hit.m_point, 0f, false);
 				return;
 			}
-
-			//clamp for when a config lowers the health than what was saved previously
-			var currentHealth = Mathf.Clamp(zdo.GetFloat(HealthZdoString, ModConfig.general.wall_health), 0, ModConfig.general.wall_health);
 
 			hit.ApplyResistance(Util.GetPickaxeOnlyDamageMods(), out var type);
 			float totalDamage = hit.GetTotalDamage();
@@ -72,13 +68,13 @@ namespace Mineshafts.Components
 				return;
 			}
 
-			currentHealth -= totalDamage;
+			health -= totalDamage;
 
 			parentTile.onHitEffects.ForEach(effect => GameObject.Instantiate(effect, t.position, Quaternion.identity));
 
-			if (currentHealth <= 0f)
+			if (health <= 0f)
 			{
-				currentHealth = ModConfig.general.wall_health;
+				health = ModConfig.general.wall_health;
 
 				var posToSpawnOn = parentTile.transform.position + t.forward * Main.gridSize;
 				TileManager.RequestPlacement(posToSpawnOn);
@@ -111,8 +107,6 @@ namespace Mineshafts.Components
 					}
 				}
 			}
-
-			zdo.Set(HealthZdoString, currentHealth);
 		}
 
 		public DestructibleType GetDestructibleType()

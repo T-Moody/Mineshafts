@@ -77,7 +77,7 @@ namespace Mineshafts.Patches
 
         private static void AddPrefab(this ZNetScene zns, GameObject prefab)
         {
-            if(zns.m_prefabs.Find(_prefab => string.Equals(_prefab.name, prefab.name, System.StringComparison.Ordinal))) zns.m_prefabs.Add(prefab);
+            if(zns.m_prefabs.Find(_prefab => string.Equals(_prefab.name, prefab.name, System.StringComparison.Ordinal)) == null) zns.m_prefabs.Add(prefab);
             if(!zns.m_namedPrefabs.ContainsKey(prefab.name.GetStableHashCode())) zns.m_namedPrefabs.Add(prefab.name.GetStableHashCode(), prefab);
         }
 

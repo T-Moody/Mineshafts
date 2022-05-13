@@ -6,13 +6,14 @@ namespace Mineshafts.Components
     {
 		public bool alwaysAlign = false;
 		public bool spawnEntryTile = false;
+		public ZNetView znv;
 
 		private void Start()
 		{
 			if (transform.position.y < Main.gridMinHeight || alwaysAlign)
 			{
 				Align();
-				if(spawnEntryTile)	TryPlaceEntryTile();
+				if(spawnEntryTile && znv != null && znv.IsValid() && znv.IsOwner())	TryPlaceEntryTile();
 			}
 		}
 
