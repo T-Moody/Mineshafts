@@ -37,6 +37,7 @@ All configs reload during runtime.
 ``biomes`` = array of possible bioms this vein may spawn in  
 possible biomes: Global, None, Meadows, Swamp, Mountain, BlackForest, Plains, AshLands, DeepNorth, Ocean, Mistlands  
 ``weight`` = likelinnes of a vein occuring over others in the same biome  
+``min_pickaxe_tier`` = minimum pickaxe tier required to mine this vein  
 ``color`` = color of the vein model defined in hex color code  
 ``emission_color`` = color of the glow on the vein model, black - no glow
 ``metallic`` = adds a metallic shine to the vein  
