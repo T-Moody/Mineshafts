@@ -43,7 +43,7 @@ possible biomes: Global, None, Meadows, Swamp, Mountain, BlackForest, Plains, As
 ``shine`` = defines the smoothness/shine of the vein model  
 ``drop`` = item dropped by this vein  
 ``drop min``/``max`` = amount of dropped material  
-to define a vein config the header must start with ``vein_`` followed by anything, for example [vein_my_vein-mistlands-32]  
+to define a vein config the header must start with ``vein_`` followed by anything, for example ``[vein_my_vein-mistlands-32]``  
 
 ## Screenshots  
 
