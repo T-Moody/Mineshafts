@@ -17,7 +17,7 @@ Configuration for the mod is done within the ``GoldenJude_Mineshafts.cfg`` file 
 All configs reload during runtime.  
 
 #### General configuration  
-``wall_health`` = configures the health of underground stone  
+``wall_health`` = configures the health of underground rock  
 ``min_pickaxe_tier`` = minimum pickaxe tier needed to mine generic underground rock  
 ``vein_chance`` = percent chance that a vein will appear  
 ``default_drop`` = default drop when mining underground rock  
