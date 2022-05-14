@@ -7,11 +7,11 @@ namespace Mineshafts.Components
     public class MineTileDestructible : MonoBehaviour, IDestructible
     {
 		public string zdoName = string.Empty;
-		public float health = ModConfig.general.wall_health;
 
 		public MineTile parentTile;
 
 		private string DamageRpcString => "damage_" + zdoName;
+		private string HealthZdoString => "health_" + zdoName;
 
 		public void Awake()
 		{
@@ -19,7 +19,6 @@ namespace Mineshafts.Components
 			{
 				parentTile.znview.Register(DamageRpcString, new Action<long, HitData>(RPC_Damage));
 			}
-			health = ModConfig.general.wall_health;
 		}
 
 		public void Damage(HitData hit)
@@ -40,10 +39,9 @@ namespace Mineshafts.Components
 
 		private void RPC_Damage(long sender, HitData hit)
 		{
-			if (!parentTile.znview.IsValid() || !parentTile.znview.IsOwner())
-			{
-				return;
-			}
+			if (!parentTile.znview.IsValid() || !parentTile.znview.IsOwner()) return;
+
+			var zdo = parentTile.znview.GetZDO();
 			var t = transform;
 
 			if(t.position.y + Main.gridSize > Main.gridMaxHeight || t.position.y - Main.gridSize < Main.gridMinHeight)
@@ -63,19 +61,16 @@ namespace Mineshafts.Components
 
 			DamageText.instance.ShowText(type, hit.m_point, totalDamage, false);
 
-			if (totalDamage <= 0f)
-			{
-				return;
-			}
+			if (totalDamage <= 0f) return;
 
-			health -= totalDamage;
+			//clamp for when a config lowers the health than what was saved previously
+			var currentHealth = Mathf.Clamp(zdo.GetFloat(HealthZdoString, ModConfig.general.wall_health), 0, ModConfig.general.wall_health);
+			currentHealth -= totalDamage;
 
 			parentTile.onHitEffects.ForEach(effect => GameObject.Instantiate(effect, t.position, Quaternion.identity));
 
-			if (health <= 0f)
+			if (currentHealth <= 0f)
 			{
-				health = ModConfig.general.wall_health;
-
 				var posToSpawnOn = parentTile.transform.position + t.forward * Main.gridSize;
 				TileManager.RequestPlacement(posToSpawnOn);
 
@@ -106,6 +101,12 @@ namespace Mineshafts.Components
 						}
 					}
 				}
+
+				zdo.ReleaseFloats();//release wall healths from memory
+			}
+			else
+            {
+				zdo.Set(HealthZdoString, currentHealth);
 			}
 		}
 

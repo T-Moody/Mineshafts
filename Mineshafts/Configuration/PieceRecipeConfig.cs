@@ -27,13 +27,21 @@ namespace Mineshafts.Configuration
             return reqs.ToArray();
         }
 
-        public void ApplyConfig()
+        public void Apply()
         {
             var zns = ZNetScene.instance;
             if (zns == null) return;
 
-            var pieceObject = zns.GetPrefab(piece)?.GetComponent<Piece>();
-            pieceObject.m_resources = CreateRequirements();
+            var requirements = CreateRequirements(); ;
+
+            zns.m_namedPrefabs[piece.GetStableHashCode()].GetComponent<Piece>().m_resources = requirements;
+
+            var hammer = zns.m_namedPrefabs["Hammer".GetStableHashCode()]?.GetComponent<ItemDrop>();
+            if(hammer != null)
+            {
+                var pieceInHammerList = hammer.m_itemData.m_shared.m_buildPieces.m_pieces.Find(p => string.Equals(p.name, piece, StringComparison.Ordinal))?.GetComponent<Piece>();
+                if (pieceInHammerList != null) pieceInHammerList.m_resources = requirements;
+            }
         }
     }
 }

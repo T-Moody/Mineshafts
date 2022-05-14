@@ -19,8 +19,8 @@ namespace Mineshafts
         public static ManualLogSource log;
 
         public static int gridSize = 3;
-        public static int gridMaxHeight = Util.RoundToNearestGridPoint(8000); //8001
-        public static int gridMinHeight = Util.RoundToNearestGridPoint(7000); //6999, 7500 center
+        public static int gridMaxHeight = Util.RoundToNearestGridPoint(7500); //7500
+        public static int gridMinHeight = Util.RoundToNearestGridPoint(7000); //6999, 7251 center
 
         public static int roomTheme = 1024;
 

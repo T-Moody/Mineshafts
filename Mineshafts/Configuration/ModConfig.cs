@@ -37,7 +37,7 @@ namespace Mineshafts.Configuration
                 LoadConfigs();
                 ModConfig.localization.InsertLocalization();
                 TileManager.RequestUpdateAll();
-                pieceRecipes.ForEach(r => r.ApplyConfig());
+                pieceRecipes.ForEach(r => r.Apply());
                 abandonedMineshaft.Apply();
             };
 

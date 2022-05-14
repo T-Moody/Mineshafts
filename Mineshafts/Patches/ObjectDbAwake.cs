@@ -56,9 +56,8 @@ namespace Mineshafts.Patches
                     if (hammerPrefabList.Contains(prefabName)) hammerPieces.AddPiece(prefab);
                 }
 
-                ModConfig.pieceRecipes.ForEach(r => r.ApplyConfig());
+                ModConfig.pieceRecipes.ForEach(r => r.Apply());
             }
-
             bundle.Unload(false);
 
             ModConfig.localization.InsertLocalization();
@@ -71,19 +70,21 @@ namespace Mineshafts.Patches
 
         private static void AddItem(this ObjectDB db, GameObject item)
         {
-            if(db.m_items.Find(_item => string.Equals(_item.name, item.name, System.StringComparison.Ordinal)) == null) db.m_items.Add(item);
+            if(!db.m_items.Exists(i => string.Equals(i.name, item.name, System.StringComparison.Ordinal))) db.m_items.Add(item);
             if(!db.m_itemByHash.ContainsKey(item.name.GetStableHashCode())) db.m_itemByHash.Add(item.name.GetStableHashCode(), item);
         }
 
         private static void AddPrefab(this ZNetScene zns, GameObject prefab)
         {
-            if(zns.m_prefabs.Find(_prefab => string.Equals(_prefab.name, prefab.name, System.StringComparison.Ordinal)) == null) zns.m_prefabs.Add(prefab);
+            if(!zns.m_prefabs.Exists(p => string.Equals(p.name, prefab.name, System.StringComparison.Ordinal))) zns.m_prefabs.Add(prefab);
+            //if (zns.m_prefabs.Find(_prefab => string.Equals(_prefab.name, prefab.name, System.StringComparison.Ordinal)) == null) zns.m_prefabs.Add(prefab);
             if(!zns.m_namedPrefabs.ContainsKey(prefab.name.GetStableHashCode())) zns.m_namedPrefabs.Add(prefab.name.GetStableHashCode(), prefab);
         }
 
         private static void AddPiece(this List<GameObject> hammerPieces, GameObject piece)
         {
-            if (hammerPieces.Find(_piece => string.Equals(_piece.name, piece.name, System.StringComparison.Ordinal)) == null) hammerPieces.Add(piece);
+            //hammerPieces.Remove(hammerPieces.Find(p => string.Equals(p.name, piece.name, System.StringComparison.Ordinal)));
+            if (!hammerPieces.Exists(_piece => string.Equals(_piece.name, piece.name, System.StringComparison.Ordinal))) hammerPieces.Add(piece);
         }
     }
 }
