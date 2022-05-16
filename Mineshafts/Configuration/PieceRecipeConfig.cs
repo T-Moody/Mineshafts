@@ -39,6 +39,7 @@ namespace Mineshafts.Configuration
             {
                 Main.log.LogError($"error caught while attemptint to create recipe for piece {piece}, the recipe will be empty");
                 Main.log.LogError(e.Message);
+                reqs.Clear();
             }
 
             return reqs.ToArray();

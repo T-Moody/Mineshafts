@@ -11,6 +11,8 @@ You may also file an issue on [GitHub](https://github.com/GoldenJude/Mineshafts/
 - upon entering a mine you may dig around using your pickaxe and eventually find ores  
 - building within mines is allowed  
 - it is possible to link up separate mineshafts by digging towards them  
+- the dug up area will stay behind even when destroying a mineshaft entrance, feel free to reposition entrances  
+- placing an entrance inside a mine will link it up back to the surface  
 
 #### Abandoned mineshafts
 - explore the remains of past mining operations and fight the entrapped miners  
