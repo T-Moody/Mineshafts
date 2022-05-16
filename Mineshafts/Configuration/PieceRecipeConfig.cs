@@ -11,18 +11,25 @@ namespace Mineshafts.Configuration
 
         public Piece.Requirement[] CreateRequirements()
         {
-            var zns = ZNetScene.instance;
-            if (zns == null) return Array.Empty<Piece.Requirement>();
-
             var reqs = new List<Piece.Requirement>();
+            var zns = ZNetScene.instance;
+            if (zns == null) return reqs.ToArray();
+            
             for (int i = 0; i < items.Count; i+=2)
             {
-                reqs.Add(new Piece.Requirement()
+                var resItem = zns.GetPrefab(items[i])?.GetComponent<ItemDrop>();
+                if (resItem == null) continue;
+
+                var amount = int.Parse(items[i + 1]);
+
+                var req = new Piece.Requirement()
                 {
-                    m_resItem = zns.GetPrefab(items[i])?.GetComponent<ItemDrop>(),
-                    m_amount = int.Parse(items[i+1]),
+                    m_resItem = resItem,
+                    m_amount = amount,
                     m_recover = recover
-                });
+                };
+
+                reqs.Add(req);
             }
             return reqs.ToArray();
         }
@@ -32,14 +39,16 @@ namespace Mineshafts.Configuration
             var zns = ZNetScene.instance;
             if (zns == null) return;
 
-            var requirements = CreateRequirements(); ;
+            var pieceThing = zns.GetPrefab(piece)?.GetComponent<Piece>();
+            if (pieceThing == null) return;
 
-            zns.m_namedPrefabs[piece.GetStableHashCode()].GetComponent<Piece>().m_resources = requirements;
+            var requirements = CreateRequirements();
+            pieceThing.m_resources = requirements;
 
-            var hammer = zns.m_namedPrefabs["Hammer".GetStableHashCode()]?.GetComponent<ItemDrop>();
+            var hammer = zns.GetPrefab("Hammer")?.GetComponent<ItemDrop>(); //zns.m_namedPrefabs["Hammer".GetStableHashCode()]?.GetComponent<ItemDrop>();
             if(hammer != null)
             {
-                var pieceInHammerList = hammer.m_itemData.m_shared.m_buildPieces.m_pieces.Find(p => string.Equals(p.name, piece, StringComparison.Ordinal))?.GetComponent<Piece>();
+                var pieceInHammerList = hammer.m_itemData.m_shared.m_buildPieces?.m_pieces?.Find(p => string.Equals(p.name, piece, StringComparison.Ordinal))?.GetComponent<Piece>();
                 if (pieceInHammerList != null) pieceInHammerList.m_resources = requirements;
             }
         }
