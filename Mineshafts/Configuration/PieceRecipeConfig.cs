@@ -15,22 +15,32 @@ namespace Mineshafts.Configuration
             var zns = ZNetScene.instance;
             if (zns == null) return reqs.ToArray();
             
-            for (int i = 0; i < items.Count; i+=2)
+            try
             {
-                var resItem = zns.GetPrefab(items[i])?.GetComponent<ItemDrop>();
-                if (resItem == null) continue;
-
-                var amount = int.Parse(items[i + 1]);
-
-                var req = new Piece.Requirement()
+                for (int i = 0; i < items.Count; i += 2)
                 {
-                    m_resItem = resItem,
-                    m_amount = amount,
-                    m_recover = recover
-                };
+                    var resItem = zns.GetPrefab(items[i])?.GetComponent<ItemDrop>();
+                    if (resItem == null) continue;
 
-                reqs.Add(req);
+                    var amount = int.Parse(items[i + 1]);
+
+                    var req = new Piece.Requirement()
+                    {
+                        m_resItem = resItem,
+                        m_amount = amount,
+                        m_recover = recover
+                    };
+
+                    reqs.Add(req);
+                }
+                return reqs.ToArray();
             }
+            catch(Exception e)
+            {
+                Main.log.LogError($"error caught while attemptint to create recipe for piece {piece}, the recipe will be empty");
+                Main.log.LogError(e.Message);
+            }
+
             return reqs.ToArray();
         }
 

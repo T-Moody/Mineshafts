@@ -8,9 +8,13 @@ You may also file an issue on [GitHub](https://github.com/GoldenJude/Mineshafts/
 
 #### Underground mining
 - place down a mineshaft entrance, grab your pickaxe and uncover the riches hiding deep in the earth  
+- upon entering a mine you may dig around using your pickaxe and eventually find ores  
+- building within mines is allowed  
+- it is possible to link up separate mineshafts by digging towards them  
 
 #### Abandoned mineshafts
 - explore the remains of past mining operations and fight the entrapped miners  
+- abandoned mineshafts generate throughout the world and contain loot aswell as exposed ore veins  
 
 ## Configuration
 Configuration for the mod is done within the ``GoldenJude_Mineshafts.cfg`` file created upon game launch.  
@@ -39,7 +43,7 @@ possible biomes: Global, None, Meadows, Swamp, Mountain, BlackForest, Plains, As
 ``weight`` = likelinnes of a vein occuring over others in the same biome  
 ``min_pickaxe_tier`` = minimum pickaxe tier required to mine this vein  
 ``color`` = color of the vein model defined in hex color code  
-``emission_color`` = color of the glow on the vein model, black - no glow
+``emission_color`` = color of the glow on the vein model, black - no glow  
 ``metallic`` = adds a metallic shine to the vein  
 ``shine`` = defines the smoothness/shine of the vein model  
 ``drop`` = item dropped by this vein  
@@ -54,8 +58,10 @@ to define a vein config the header must start with ``vein_`` followed by anythin
 ![pic4](https://cdn.discordapp.com/attachments/818400376255545395/974629195416236092/unknown.png)  
 
 ## Changelog   
+- **1.0.1**  
+fixed an error regarding piece configs  
 - **1.0.0**  
-Initial upload  
+initial upload  
 
 ## Prefab names  
 
