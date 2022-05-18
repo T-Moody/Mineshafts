@@ -16,11 +16,12 @@ namespace Mineshafts
 
         public static float GetRandomNumberForPosition(Vector3 position, float minNumber, float maxNumber)
         {
-            var state = UnityEngine.Random.state;
-            UnityEngine.Random.InitState(WorldGenerator.instance.GetSeed() + (position.x + position.y + position.z).ToString().GetStableHashCode());
-            var number = Random.Range(minNumber, maxNumber);
-            UnityEngine.Random.state = state;
-            return number;
+            var prevState = UnityEngine.Random.state;
+            UnityEngine.Random.InitState(WorldGenerator.instance.GetSeed() + $"{position.x}{position.y-Util.GetInitialHeight()}{position.z}".GetStableHashCode());
+            var num = Random.Range(minNumber, maxNumber);
+            UnityEngine.Random.state = prevState; 
+
+            return num;
         }
 
         public static HitData.DamageModifiers GetPickaxeOnlyDamageMods()

@@ -90,6 +90,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\PlayerBlackbox.cs" />
     <Compile Include="Configuration\AbandonedMineshaftConfig.cs" />
     <Compile Include="Patches\AddLocation.cs" />
     <Compile Include="Components\MineExit.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Components\MineTile.cs" />
     <Compile Include="Patches\AddEnv.cs" />
     <Compile Include="Patches\AddRooms.cs" />
+    <Compile Include="Patches\AttachBlackbox.cs" />
     <Compile Include="Patches\DungeonGenerate.cs" />
     <Compile Include="Patches\AllowBuildingInMines.cs" />
     <Compile Include="Patches\GetLocalizationInstance.cs" />
@@ -128,6 +130,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
