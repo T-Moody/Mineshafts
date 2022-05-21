@@ -53,7 +53,10 @@ namespace Mineshafts.Components
 			hit.ApplyResistance(Util.GetPickaxeOnlyDamageMods(), out var type);
 			float totalDamage = hit.GetTotalDamage();
 
-			if (hit.m_toolTier < ModConfig.general.min_pickaxe_tier)
+			var tileInFrontPos = parentTile.transform.position + t.forward * Main.gridSize;
+			var veinInFront = ModConfig.GetVeinConfigForPosition(tileInFrontPos);
+
+			if (hit.m_toolTier < ModConfig.general.min_pickaxe_tier || (veinInFront != null && veinInFront.min_pickaxe_tier > hit.m_toolTier))
 			{
 				DamageText.instance.ShowText(DamageText.TextType.TooHard, hit.m_point, 0f, false);
 				return;
@@ -71,10 +74,10 @@ namespace Mineshafts.Components
 
 			if (currentHealth <= 0f)
 			{
-				var posToSpawnOn = parentTile.transform.position + t.forward * Main.gridSize;
-				TileManager.RequestPlacement(posToSpawnOn);
+				
+				TileManager.RequestPlacement(tileInFrontPos);
 
-				parentTile.onDestroyEffects.ForEach(effect => GameObject.Instantiate(effect, posToSpawnOn, Quaternion.identity));
+				parentTile.onDestroyEffects.ForEach(effect => GameObject.Instantiate(effect, tileInFrontPos, Quaternion.identity));
 
 				var defaultDrop = ZNetScene.instance.GetPrefab(ModConfig.general.default_drop);
 				if (defaultDrop != null)
@@ -82,21 +85,20 @@ namespace Mineshafts.Components
 					var dropAmount = UnityEngine.Random.Range(ModConfig.general.default_drop_min, ModConfig.general.default_drop_max);
 					if (dropAmount > 0)
 					{
-						var spawnedDrop = Util.InstantiateOnGrid(defaultDrop, posToSpawnOn);
+						var spawnedDrop = Util.InstantiateOnGrid(defaultDrop, tileInFrontPos);
 						spawnedDrop.GetComponent<ItemDrop>()?.SetStack(dropAmount);
 					}
 				}
 
-				var vein = ModConfig.GetVeinConfigForPosition(posToSpawnOn);
-				if (vein != null)
+				if (veinInFront != null)
 				{
-					var veinDrop = ZNetScene.instance.GetPrefab(vein.drop);
+					var veinDrop = ZNetScene.instance.GetPrefab(veinInFront.drop);
 					if (veinDrop != null)
 					{
-						var dropAmount = UnityEngine.Random.Range(vein.drop_min, vein.drop_max);
+						var dropAmount = UnityEngine.Random.Range(veinInFront.drop_min, veinInFront.drop_max);
 						if (dropAmount > 0)
 						{
-							var spawnedDrop = Util.InstantiateOnGrid(veinDrop, posToSpawnOn);
+							var spawnedDrop = Util.InstantiateOnGrid(veinDrop, tileInFrontPos);
 							spawnedDrop.GetComponent<ItemDrop>()?.SetStack(dropAmount);
 						}
 					}

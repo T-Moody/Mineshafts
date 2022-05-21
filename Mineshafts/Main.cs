@@ -14,7 +14,7 @@ namespace Mineshafts
         public const string MODNAME = "Mineshafts";
         public const string AUTHOR = "GoldenJude";
         public const string GUID = AUTHOR + "_" + MODNAME;
-        public const string VERSION = "1.0.2";
+        public const string VERSION = "1.0.3";
 
         public static ManualLogSource log;
 

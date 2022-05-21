@@ -60,6 +60,10 @@ to define a vein config the header must start with ``vein_`` followed by anythin
 ![pic4](https://cdn.discordapp.com/attachments/818400376255545395/974629195416236092/unknown.png)  
 
 ## Changelog   
+- **1.0.3**  
+fixed min pickaxe tier config for veins not applying  
+- **1.0.2.**  
+fixed vein chance calculation resulting in infinite strips of veins  
 - **1.0.1**  
 fixed an error regarding piece configs  
 - **1.0.0**  
