@@ -8,7 +8,7 @@ namespace Mineshafts.Configuration
     {
         public static Dictionary<string, Dictionary<string, object>> Parse(string str)
         {
-            var lines = str.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            var lines = str.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
             var table = new Dictionary<string, Dictionary<string, object>>();
 
