@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Mineshafts.Configuration
 {
@@ -65,6 +66,11 @@ namespace Mineshafts.Configuration
             foreach (KeyValuePair<string, object> property in parsedCfg)
             {
                 var p = obj.GetType().GetProperty(property.Key);
+                if(p == null)
+                {
+                    Main.log.LogWarning($"property {property.Key} is invalid for {typeof(T)}, check your config");
+                    continue;
+                }
                 var value = property.Value;
 
                 if (p.PropertyType == typeof(int)) value = int.Parse(value.ToString());

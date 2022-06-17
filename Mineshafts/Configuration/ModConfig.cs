@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
 using System;
 using ServerSync;
@@ -10,18 +9,18 @@ namespace Mineshafts.Configuration
 {
     public static class ModConfig
     {
+        public static GeneralConfig General { get; set; } = new GeneralConfig();
+
+        public static AbandonedMineshaftConfig AbandonedMineshaft { get; set; } = new AbandonedMineshaftConfig();
+
+        public static List<PieceRecipeConfig> PieceRecipes { get; set; } = new List<PieceRecipeConfig>();
+
+        public static LocalizationConfig Localization { get; set; } = new LocalizationConfig();
+
+        public static List<DropConfig> drops { get; set; } = new List<DropConfig>();
+
         public static ConfigSync sync = new ConfigSync(Main.GUID) { DisplayName = Main.MODNAME, CurrentVersion = Main.VERSION, MinimumRequiredVersion = Main.VERSION, IsLocked = true };
         public static CustomSyncedValue<string> configString = new CustomSyncedValue<string>(ModConfig.sync, Main.MODNAME);
-
-        public static GeneralConfig general = new GeneralConfig();
-
-        public static AbandonedMineshaftConfig abandonedMineshaft = new AbandonedMineshaftConfig();
-
-        public static List<PieceRecipeConfig> pieceRecipes = new List<PieceRecipeConfig>();
-
-        public static LocalizationConfig localization = new LocalizationConfig();
-
-        public static List<VeinConfig> veins = new List<VeinConfig>();
 
         public static FileSystemWatcher fsw = new FileSystemWatcher()
         {
@@ -35,10 +34,10 @@ namespace Mineshafts.Configuration
             ModConfig.configString.ValueChanged += () =>
             {
                 LoadConfigs();
-                ModConfig.localization.InsertLocalization();
+                ModConfig.Localization.InsertLocalization();
                 TileManager.RequestUpdateAll();
-                pieceRecipes.ForEach(r => r.Apply());
-                abandonedMineshaft.Apply();
+                PieceRecipes.ForEach(r => r.Apply());
+                AbandonedMineshaft.Apply();
             };
 
             fsw.Changed += (object sender, FileSystemEventArgs e) =>
@@ -58,28 +57,28 @@ namespace Mineshafts.Configuration
             LoadAbandonedMineshaft();
             LoadRecipes();
             LoadLocalization();
-            LoadVeinConfigs();
+            LoadDropConfigs();
         }
 
         private static void LoadGeneralConfig()
         {
             var parsed = ConfigParser.Parse(configString.Value);
-            general = ConfigParser.ToObject<GeneralConfig>(parsed["general"]);
+            General = ConfigParser.ToObject<GeneralConfig>(parsed["general"]);
         }
 
         private static void LoadLocalization()
         {
             var parsed = ConfigParser.Parse(configString.Value);
-            localization = ConfigParser.ToObject<LocalizationConfig>(parsed["localization"]);
+            Localization = ConfigParser.ToObject<LocalizationConfig>(parsed["localization"]);
         }
 
-        private static void LoadVeinConfigs()
+        private static void LoadDropConfigs()
         {
             var parsed = ConfigParser.Parse(configString.Value);
-            var veinConfigs = parsed
-                .Where(pair => pair.Key.StartsWith("vein", StringComparison.OrdinalIgnoreCase))
-                .Select(vein => ConfigParser.ToObject<VeinConfig>(vein.Value)).ToList();
-            veins = veinConfigs; 
+            var dropConfigs = parsed
+                .Where(pair => pair.Key.StartsWith("drop", StringComparison.OrdinalIgnoreCase))
+                .Select(drop => ConfigParser.ToObject<DropConfig>(drop.Value)).ToList();
+            drops = dropConfigs; 
         }
 
         private static void LoadRecipes()
@@ -88,7 +87,7 @@ namespace Mineshafts.Configuration
             var pieceRecs =
                 parsed.Where(pair => pair.Key.StartsWith("recipe_piece", StringComparison.OrdinalIgnoreCase))
                 .Select(pieceRec => ConfigParser.ToObject<PieceRecipeConfig>(pieceRec.Value)).ToList();
-            pieceRecipes = pieceRecs;
+            PieceRecipes = pieceRecs;
 
             //in future add item recipe config and load them here too
         }
@@ -96,37 +95,14 @@ namespace Mineshafts.Configuration
         private static void LoadAbandonedMineshaft()
         {
             var parsed = ConfigParser.Parse(configString.Value);
-            abandonedMineshaft = ConfigParser.ToObject<AbandonedMineshaftConfig>(parsed["abandoned_mineshaft"]);
+            AbandonedMineshaft = ConfigParser.ToObject<AbandonedMineshaftConfig>(parsed["abandoned_mineshaft"]);
         }
 
-        public static List<VeinConfig> GetVeinConfigsForBiome(string biome, bool includeGlobal = true)
+        public static List<DropConfig> GetDropsForBiome(string biome, bool includeGlobal = true)
         {
-            var biomeConfigs = veins.FindAll(vein => vein.biomes.Contains(biome));
-            if (includeGlobal) biomeConfigs.AddRange(veins.FindAll(vein => vein.biomes.Contains("Global")));
+            var biomeConfigs = drops.FindAll(drops => drops.biomes.Contains(biome));
+            if (includeGlobal) biomeConfigs.AddRange(drops.FindAll(vein => vein.biomes.Contains("Global")));
             return biomeConfigs;
-        }
-
-        public static VeinConfig GetVeinConfigForPosition(Vector3 pos)
-        {
-            var alignedPos = Util.ConvertVector3ToGridAligned(pos);
-
-            var isVein = Util.GetRandomNumberForPosition(alignedPos, 0, 100) <= general.vein_chance;
-            if (!isVein) return null;
-
-            var possibleVeins = GetVeinConfigsForBiome(WorldGenerator.instance.GetBiome(alignedPos).ToString());
-            if (possibleVeins.Count == 0) return null;
-
-            var weightSum = 0;
-            possibleVeins.ForEach(vein => weightSum += vein.weight);
-
-            var rolledChance = Util.GetRandomNumberForPosition(alignedPos * 2, 0, weightSum);
-
-            foreach (VeinConfig vein in possibleVeins)
-            {
-                if (rolledChance <= vein.weight) return vein;
-                rolledChance -= vein.weight;
-            }
-            return null;
         }
     }
 }

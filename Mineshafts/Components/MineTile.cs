@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using Mineshafts.Configuration;
-using System.Linq;
 
 namespace Mineshafts.Components
 {
@@ -36,18 +34,6 @@ namespace Mineshafts.Components
 		public List<GameObject> AllWalls => new List<GameObject>()
 		{
 			northWall, eastWall, southWall, westWall, ceilingWall, floorWall
-		};
-
-		[Header("veins")]
-		public GameObject northVein;
-		public GameObject eastVein;
-		public GameObject southVein;
-		public GameObject westVein;
-		public GameObject ceilingVein;
-		public GameObject floorVein;
-		public List<GameObject> AllVeins => new List<GameObject>()
-		{
-			northVein, eastVein, southVein, westVein, ceilingVein, floorVein
 		};
 
 		[Header("effects")]
@@ -182,63 +168,7 @@ namespace Mineshafts.Components
 			if (downAdjacent) floorWall.SetActive(false);
 
 			var t = transform;
-
-			var northernVeinCfg = ModConfig.GetVeinConfigForPosition(t.position + Vector3.forward * Main.gridSize);
-			SetupVein(northVein, northernVeinCfg);
-
-			var easternVeinCfg = ModConfig.GetVeinConfigForPosition(t.position + Vector3.right * Main.gridSize);
-			SetupVein(eastVein, easternVeinCfg);
-
-			var southernVeinCfg = ModConfig.GetVeinConfigForPosition(t.position + Vector3.back * Main.gridSize);
-			SetupVein(southVein, southernVeinCfg);
-
-			var westernVeinCfg = ModConfig.GetVeinConfigForPosition(t.position + Vector3.left * Main.gridSize);
-			SetupVein(westVein, westernVeinCfg);
-
-			var ceilingVeinCfg = ModConfig.GetVeinConfigForPosition(t.position + Vector3.up * Main.gridSize);
-			SetupVein(ceilingVein, ceilingVeinCfg);
-
-			var floorVeinCfg = ModConfig.GetVeinConfigForPosition(t.position + Vector3.down * Main.gridSize);
-			SetupVein(floorVein, floorVeinCfg);
 		}
-
-		public void SetupVein(GameObject vein, VeinConfig config)
-        {
-			if (vein == null) return;
-			if (config == null)
-            {
-				vein.SetActive(false);
-				return;
-            }
-
-			vein.SetActive(true);
-			var renderers = vein.GetComponentsInChildren<MeshRenderer>(true).ToList();
-			foreach(MeshRenderer r in renderers)
-            {
-				var mats = r.materials;
-				foreach(Material mat in mats)
-                {
-					if (config.metallic)
-                    {
-						mat.color = Color.white;
-						if (ColorUtility.TryParseHtmlString(config.color, out var metalColor)) mat.SetColor("_MetalColor", metalColor);
-						mat.SetFloat("_Metallic", 1);
-						mat.SetFloat("_Glossiness", 0);
-						mat.SetFloat("_MetallicAlphaGloss", config.shine / 100f);
-					}
-                    else
-                    {
-						if (ColorUtility.TryParseHtmlString(config.color, out var matColor)) mat.color = matColor;
-						mat.SetFloat("_Metallic", 0);
-						mat.SetFloat("_MetallicAlphaGloss", 0);
-						mat.SetFloat("_Glossiness", config.shine / 100f);
-						mat.SetFloat("_GlossMapScale", 1);
-					}
-
-					if (ColorUtility.TryParseHtmlString(config.emission_color, out var emissionColor)) mat.SetColor("_EmissionColor", emissionColor);
-				}
-            }
-        }
         #endregion
     }
 }

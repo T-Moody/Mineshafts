@@ -18,8 +18,8 @@ namespace Mineshafts.Patches
                 Util.AlignTransformToGrid(t);
                 t.position = new Vector3(t.position.x, Util.GetInitialHeight(), t.position.z);
 
-                __instance.m_minRooms = ModConfig.abandonedMineshaft.rooms;
-                __instance.m_maxRooms = ModConfig.abandonedMineshaft.rooms;
+                __instance.m_minRooms = ModConfig.AbandonedMineshaft.rooms;
+                __instance.m_maxRooms = ModConfig.AbandonedMineshaft.rooms;
             }
         }
     }

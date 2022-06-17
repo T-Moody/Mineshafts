@@ -25,7 +25,7 @@ namespace Mineshafts
         public static int roomTheme = 1024;
 
         public static string assetBundleName = "mineshafts";
-        public static string configName = GUID + ".cfg";
+        public static string configName = GUID + "_1.1" + ".cfg";
 
         public static Localization localizationInstance;
 

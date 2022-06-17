@@ -56,11 +56,11 @@ namespace Mineshafts.Patches
                     if (hammerPrefabList.Contains(prefabName)) hammerPieces.AddPiece(prefab);
                 }
 
-                ModConfig.pieceRecipes.ForEach(r => r.Apply());
+                ModConfig.PieceRecipes.ForEach(r => r.Apply());
             }
             bundle.Unload(false);
 
-            ModConfig.localization.InsertLocalization();
+            ModConfig.Localization.InsertLocalization();
         }
 
         private static GameObject GetPrefab(this AssetBundle bundle, string prefabName)

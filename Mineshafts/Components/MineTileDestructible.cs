@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using Mineshafts.Configuration;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Mineshafts.Components
 {
@@ -54,9 +56,8 @@ namespace Mineshafts.Components
 			float totalDamage = hit.GetTotalDamage();
 
 			var tileInFrontPos = parentTile.transform.position + t.forward * Main.gridSize;
-			var veinInFront = ModConfig.GetVeinConfigForPosition(tileInFrontPos);
 
-			if (hit.m_toolTier < ModConfig.general.min_pickaxe_tier || (veinInFront != null && veinInFront.min_pickaxe_tier > hit.m_toolTier))
+			if (hit.m_toolTier < ModConfig.General.min_pickaxe_tier)
 			{
 				DamageText.instance.ShowText(DamageText.TextType.TooHard, hit.m_point, 0f, false);
 				return;
@@ -67,42 +68,24 @@ namespace Mineshafts.Components
 			if (totalDamage <= 0f) return;
 
 			//clamp for when a config lowers the health than what was saved previously
-			var currentHealth = Mathf.Clamp(zdo.GetFloat(HealthZdoString, ModConfig.general.wall_health), 0, ModConfig.general.wall_health);
+			var currentHealth = Mathf.Clamp(zdo.GetFloat(HealthZdoString, ModConfig.General.stone_health), 0, ModConfig.General.stone_health);
 			currentHealth -= totalDamage;
 
 			parentTile.onHitEffects.ForEach(effect => GameObject.Instantiate(effect, t.position, Quaternion.identity));
 
 			if (currentHealth <= 0f)
 			{
-				
 				TileManager.RequestPlacement(tileInFrontPos);
 
 				parentTile.onDestroyEffects.ForEach(effect => GameObject.Instantiate(effect, tileInFrontPos, Quaternion.identity));
 
-				var defaultDrop = ZNetScene.instance.GetPrefab(ModConfig.general.default_drop);
-				if (defaultDrop != null)
-				{
-					var dropAmount = UnityEngine.Random.Range(ModConfig.general.default_drop_min, ModConfig.general.default_drop_max);
-					if (dropAmount > 0)
-					{
-						var spawnedDrop = Util.InstantiateOnGrid(defaultDrop, tileInFrontPos);
-						spawnedDrop.GetComponent<ItemDrop>()?.SetStack(dropAmount);
-					}
-				}
-
-				if (veinInFront != null)
-				{
-					var veinDrop = ZNetScene.instance.GetPrefab(veinInFront.drop);
-					if (veinDrop != null)
-					{
-						var dropAmount = UnityEngine.Random.Range(veinInFront.drop_min, veinInFront.drop_max);
-						if (dropAmount > 0)
-						{
-							var spawnedDrop = Util.InstantiateOnGrid(veinDrop, tileInFrontPos);
-							spawnedDrop.GetComponent<ItemDrop>()?.SetStack(dropAmount);
-						}
-					}
-				}
+				//drops here
+				var dropConfigs = ModConfig.GetDropsForBiome(WorldGenerator.instance.GetBiome(t.position).ToString());
+				dropConfigs.RemoveAll(c => c.min_pickaxe_tier > hit.m_toolTier); //remove drops that require a higher tier pickaxe
+				var dropTables = dropConfigs.Select(d => d.ToDropTable()).ToList(); //convert configs to tables
+				var drops = new List<GameObject>();
+				dropTables.ForEach(t => drops.AddRange(t.GetDropList())); //roll drops and add them to drops list
+				drops.ForEach(d => Instantiate(d, t.position, Quaternion.identity)); //spawn drops
 
 				zdo.ReleaseFloats();//release wall healths from memory
 			}

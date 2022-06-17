@@ -92,6 +92,7 @@
   <ItemGroup>
     <Compile Include="Components\PlayerBlackbox.cs" />
     <Compile Include="Configuration\AbandonedMineshaftConfig.cs" />
+    <Compile Include="Configuration\DropConfig.cs" />
     <Compile Include="Patches\AddLocation.cs" />
     <Compile Include="Components\MineExit.cs" />
     <Compile Include="Components\MineEntrance.cs" />
