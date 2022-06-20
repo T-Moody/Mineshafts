@@ -90,6 +90,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\Bruh.cs" />
     <Compile Include="Components\PlayerBlackbox.cs" />
     <Compile Include="Configuration\AbandonedMineshaftConfig.cs" />
     <Compile Include="Configuration\DropConfig.cs" />

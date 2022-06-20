@@ -23,7 +23,7 @@ namespace Mineshafts.Patches
 
                 var instantiated = UnityEngine.Object.Instantiate(msLocations, locationParent);
                 instantiated.FixReferences();
-                instantiated.GetComponentInChildren<DungeonGenerator>(true).m_themes = (Room.Theme)Main.roomTheme;
+                instantiated.GetComponentsInChildren<DungeonGenerator>(true).ToList().ForEach(d => d.m_themes = (Room.Theme)Main.roomTheme);
 
                 bundle.Unload(false);
             }
@@ -32,6 +32,21 @@ namespace Mineshafts.Patches
             {
                 m_enable = true,
                 m_prefabName = "MS_D_AbandonedMineshaft",
+                m_biome = Heightmap.Biome.BiomesMax,
+                m_biomeArea = Heightmap.BiomeArea.Everything,
+                m_quantity = 50,
+                m_chanceToSpawn = 100,
+                m_minDistanceFromSimilar = 512,
+                m_randomRotation = false,
+                m_maxTerrainDelta = 2,
+                m_minAltitude = 10,
+                m_maxAltitude = 1000
+            });
+
+            __instance.m_locations.Add(new ZoneSystem.ZoneLocation()
+            {
+                m_enable = true,
+                m_prefabName = "MS_D_Dungeon",
                 m_biome = Heightmap.Biome.BiomesMax,
                 m_biomeArea = Heightmap.BiomeArea.Everything,
                 m_quantity = 50,

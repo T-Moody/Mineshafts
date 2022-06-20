@@ -2,7 +2,7 @@
 using Mineshafts.Components;
 using System.IO;
 using UnityEngine;
-/*
+
 namespace Mineshafts.Patches
 {
     [HarmonyPatch(typeof(Player), nameof(Player.Start))]
@@ -22,4 +22,3 @@ namespace Mineshafts.Patches
         }
     }
 }
-*/

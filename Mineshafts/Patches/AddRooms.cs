@@ -15,6 +15,7 @@ namespace Mineshafts.Patches
 
             var rooms = new List<string>()
             {
+                //abandoned mineshaft
                 "MS_R_start",
                 "MS_R_cap",
                 "MS_R_room_1",
@@ -25,7 +26,13 @@ namespace Mineshafts.Patches
                 "MS_R_excavation_1",
                 "MS_R_excavation_2",
                 "MS_R_stairwell_1",
-                "MS_R_stairwell_2"
+                "MS_R_stairwell_2",
+
+                //dungeon
+                "MS_R_dcap",
+                "MS_R_dstart",
+                "MS_R_droom_1",
+                "MS_R_dtunnel"
             };
 
             List<GameObject> gos = Resources.FindObjectsOfTypeAll<GameObject>().ToList();

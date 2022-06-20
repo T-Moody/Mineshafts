@@ -19,6 +19,7 @@ namespace Mineshafts.Patches
                 var prefabList = new List<string>()
                 {
                     "MS_MineTile",
+                    "MS_MineTile_Brick",
                     "MS_Entrance",
 
                     "MS_FX_Tile_Destroyed",
