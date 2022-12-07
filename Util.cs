@@ -18,7 +18,7 @@ namespace Mineshafts
         {
             var prevState = UnityEngine.Random.state;
             UnityEngine.Random.InitState(WorldGenerator.instance.GetSeed() + $"{position.x}{position.y-Util.GetInitialHeight()}{position.z}".GetStableHashCode());
-            var num = Random.Range(minNumber, maxNumber);
+            var num = UnityEngine.Random.Range(minNumber, maxNumber);
             UnityEngine.Random.state = prevState; 
 
             return num;

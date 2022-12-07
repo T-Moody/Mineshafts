@@ -18,7 +18,7 @@ namespace Mineshafts.Configuration
             if (ZoneSystem.instance == null) return;
             var location = ZoneSystem.instance.m_locations.Find(loc => loc.m_prefabName == "MS_D_AbandonedMineshaft");
             if (location == null) return;
-            location.m_chanceToSpawn = spawn_chance;
+            //location.m_chanceToSpawn = spawn_chance;
             location.m_quantity = quantity;
             location.m_minDistanceFromSimilar = min_spacing;
             //rooms are set in DungeonGenerate patch
