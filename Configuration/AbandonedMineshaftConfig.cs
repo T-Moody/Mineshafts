@@ -8,7 +8,7 @@ namespace Mineshafts.Configuration
 {
     public class AbandonedMineshaftConfig
     {
-        public int spawn_chance { get; set; } = 100;
+        //public int spawn_chance { get; set; } = 100;
         public int quantity { get; set; } = 50;
         public int min_spacing { get; set; } = 512;
         public int rooms { get; set; } = 30;

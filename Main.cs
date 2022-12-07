@@ -14,7 +14,7 @@ namespace Mineshafts
         public const string MODNAME = "Mineshafts";
         public const string AUTHOR = "GoldenJude";
         public const string GUID = AUTHOR + "_" + MODNAME;
-        public const string VERSION = "1.0.5";
+        public const string VERSION = "1.0.6";
 
         public static ManualLogSource log;
 
@@ -25,7 +25,7 @@ namespace Mineshafts
         public static int roomTheme = 1024;
 
         public static string assetBundleName = "mineshafts";
-        public static string configName = GUID + "_1.1" + ".cfg";
+        public static string configName = GUID + "_1.2" + ".cfg";
 
         public static Localization localizationInstance;
 
