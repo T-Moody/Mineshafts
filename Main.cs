@@ -14,7 +14,7 @@ namespace Mineshafts
         public const string MODNAME = "Mineshafts";
         public const string AUTHOR = "GoldenJude";
         public const string GUID = AUTHOR + "_" + MODNAME;
-        public const string VERSION = "1.0.4";
+        public const string VERSION = "1.0.5";
 
         public static ManualLogSource log;
 
@@ -33,7 +33,8 @@ namespace Mineshafts
         {
             log = Logger;
 
-            new Harmony(GUID).PatchAll(Assembly.GetExecutingAssembly());
+            var assembly = Assembly.GetExecutingAssembly();
+            new Harmony(GUID).PatchAll(assembly);
 
             ModConfig.Setup();
 
@@ -44,8 +45,9 @@ namespace Mineshafts
             }
             else
             {
-                using var memStream = new MemoryStream(Properties.Resources.DefaultConfig);
-                using var streamReader = new StreamReader(memStream);
+                //using var memStream = new MemoryStream(Properties.Resources.DefaultConfig);
+                var configFileName = assembly.GetManifestResourceNames().Single(str => str.EndsWith("DefaultConfig.cfg"));
+                using var streamReader = new StreamReader(assembly.GetManifestResourceStream(configFileName));
 
                 var configString = streamReader.ReadToEnd();
                 ModConfig.configString.Value = configString;

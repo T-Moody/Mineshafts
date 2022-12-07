@@ -35,7 +35,7 @@ namespace Mineshafts.Patches
                 m_biome = Heightmap.Biome.BiomesMax,
                 m_biomeArea = Heightmap.BiomeArea.Everything,
                 m_quantity = 50,
-                m_chanceToSpawn = 100,
+                //m_chanceToSpawn = 100,
                 m_minDistanceFromSimilar = 512,
                 m_randomRotation = false,
                 m_maxTerrainDelta = 2,
