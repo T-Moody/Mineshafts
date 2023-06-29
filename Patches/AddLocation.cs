@@ -32,7 +32,7 @@ namespace Mineshafts.Patches
             {
                 m_enable = true,
                 m_prefabName = "MS_D_AbandonedMineshaft",
-                m_biome = Heightmap.Biome.BiomesMax,
+                m_biome = (Heightmap.Biome)Enum.GetValues(typeof(Heightmap.Biome)).Cast<int>().Sum(),
                 m_biomeArea = Heightmap.BiomeArea.Everything,
                 m_quantity = 50,
                 //m_chanceToSpawn = 100,

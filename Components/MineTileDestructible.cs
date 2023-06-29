@@ -87,7 +87,8 @@ namespace Mineshafts.Components
 				dropTables.ForEach(t => drops.AddRange(t.GetDropList())); //roll drops and add them to drops list
 				drops.ForEach(d => Instantiate(d, t.position, Quaternion.identity)); //spawn drops
 
-				zdo.ReleaseFloats();//release wall healths from memory
+				// removed in some update, don't care
+				// zdo.ReleaseFloats(); // release wall healths from memory
 			}
 			else
             {
