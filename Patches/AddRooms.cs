@@ -1,54 +1,74 @@
-﻿using HarmonyLib;
-using System;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 namespace Mineshafts.Patches
 {
-    [HarmonyPatch(typeof(DungeonDB), nameof(DungeonDB.SetupRooms))]
-    public static class AddRooms
+    [HarmonyPatch(typeof(ZoneSystem), nameof(ZoneSystem.SetupLocations))]
+    public static class AddLocation
     {
-        private static void Prefix(DungeonDB __instance)
+        public static void Prefix(ZoneSystem __instance)
         {
-            var MS_Rooms = "MS_Rooms";
-
-            var rooms = new List<string>()
+            if (__instance == null)
             {
-                "MS_R_start",
-                "MS_R_cap",
-                "MS_R_room_1",
-                "MS_R_room_2",
-                "MS_R_room_3",
-                "MS_R_room_4",
-                "MS_R_tunnel_1",
-                "MS_R_excavation_1",
-                "MS_R_excavation_2",
-                "MS_R_stairwell_1",
-                "MS_R_stairwell_2"
-            };
+                Debug.LogError("ZoneSystem instance is null");
+                return;
+            }
+
+            var msLocationsName = "MS_Locations";
 
             List<GameObject> gos = Resources.FindObjectsOfTypeAll<GameObject>().ToList();
-            if (gos.Find(go => string.Equals(go.name, MS_Rooms, StringComparison.Ordinal)) == null)
+            if (gos == null)
+            {
+                Debug.LogError("GameObject list is null");
+                return;
+            }
+
+            if (gos.Find(go => string.Equals(go.name, msLocationsName, System.StringComparison.Ordinal)) == null)
             {
                 var bundle = Util.LoadBundle(Main.assetBundleName);
-                var mineshaftRooms = bundle.LoadAsset<GameObject>(MS_Rooms);
-
-                var valheimRoomsParent = gos.Find(go => string.Equals(go.name, "_Rooms", StringComparison.Ordinal)).transform;
-
-                foreach(string roomName in rooms)
+                if (bundle == null)
                 {
-                    if(valheimRoomsParent.Find(roomName) == null)
-                    {
-                        var loadedRoom = bundle.LoadAsset<GameObject>(roomName);
-                        var instantiatedRoom = UnityEngine.GameObject.Instantiate(loadedRoom, valheimRoomsParent);
-                        instantiatedRoom.FixReferences();
-                        instantiatedRoom.name = Utils.GetPrefabName(instantiatedRoom);
-                        instantiatedRoom.GetComponent<Room>().m_theme = (Room.Theme)Main.roomTheme;
-                    }
+                    Debug.LogError("Asset bundle is null");
+                    return;
                 }
+
+                var msLocations = bundle.LoadAsset<GameObject>(msLocationsName);
+                if (msLocations == null)
+                {
+                    Debug.LogError("MS_Locations asset is null");
+                    bundle.Unload(false);
+                    return;
+                }
+
+                var locationParent = gos.Find(go => string.Equals(go.name, "_Locations", System.StringComparison.Ordinal))?.transform.Find("Meadows");
+                if (locationParent == null)
+                {
+                    Debug.LogError("Location parent is null");
+                    bundle.Unload(false);
+                    return;
+                }
+
+                var instantiated = UnityEngine.Object.Instantiate(msLocations, locationParent);
+                instantiated.FixReferences();
+                instantiated.GetComponentInChildren<DungeonGenerator>(true).m_themes = (Room.Theme)Main.roomTheme;
+
                 bundle.Unload(false);
             }
+
+            __instance.m_locations.Add(new ZoneSystem.ZoneLocation()
+            {
+                m_enable = true,
+                m_prefabName = "MS_D_AbandonedMineshaft",
+                m_biome = (Heightmap.Biome)System.Enum.GetValues(typeof(Heightmap.Biome)).Cast<int>().Sum(),
+                m_biomeArea = Heightmap.BiomeArea.Everything,
+                m_quantity = 50,
+                m_minDistanceFromSimilar = 512,
+                m_randomRotation = false,
+                m_maxTerrainDelta = 2,
+                m_minAltitude = 10,
+                m_maxAltitude = 1000
+            });
         }
     }
 }
