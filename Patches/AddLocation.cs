@@ -9,7 +9,7 @@ namespace Mineshafts.Patches
     [HarmonyPatch(typeof(ZoneSystem), nameof(ZoneSystem.SetupLocations))]
     public static class AddLocation
     {
-        public static void Prefix(ZoneSystem __instance)
+        public static void PostFix(ZoneSystem __instance)
         {
             if (__instance == null)
             {
