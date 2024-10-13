@@ -9,8 +9,14 @@ namespace Mineshafts.Patches
     [HarmonyPatch(typeof(DungeonDB), nameof(DungeonDB.SetupRooms))]
     public static class AddRooms
     {
-        private static void Prefix(DungeonDB __instance)
+        private static void PostFix(DungeonDB __instance)
         {
+            if (__instance == null)
+            {
+                Debug.LogError("DungeonDB instance is null");
+                return;
+            }
+
             var MS_Rooms = "MS_Rooms";
 
             var rooms = new List<string>()
@@ -36,9 +42,9 @@ namespace Mineshafts.Patches
 
                 var valheimRoomsParent = gos.Find(go => string.Equals(go.name, "_Rooms", StringComparison.Ordinal)).transform;
 
-                foreach(string roomName in rooms)
+                foreach (string roomName in rooms)
                 {
-                    if(valheimRoomsParent.Find(roomName) == null)
+                    if (valheimRoomsParent.Find(roomName) == null)
                     {
                         var loadedRoom = bundle.LoadAsset<GameObject>(roomName);
                         var instantiatedRoom = UnityEngine.GameObject.Instantiate(loadedRoom, valheimRoomsParent);
