@@ -1,10 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using Mineshafts.Interfaces;
+using Mineshafts.Services;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Mineshafts.Components
 {
     public class MineTile : MonoBehaviour
     {
+		private readonly IGridService _gridService = ServiceLocator.Get<IGridService>();
+		private readonly ITileService _tileService = ServiceLocator.Get<ITileService>();
+		private readonly ITileManagerService _tileManagerService = ServiceLocator.Get<ITileManagerService>();
 		public ZNetView znview;
 		public bool northAdjacent = false;
 		public bool westAdjacent = false;
@@ -53,19 +58,19 @@ namespace Mineshafts.Components
 			
 			this.m_firstFrame = false;
 
-			Util.AlignTransformToGrid(transform);
+			_gridService.AlignTransformToGrid(transform);
 			transform.eulerAngles = Vector3.zero;
 		}
 
 		public void Start()
 		{
-			TileManager.RegisterTile(this);
-			TileManager.RequestNearUpdate(this);
+			_tileManagerService.RegisterTile(this);
+			_tileManagerService.RequestNearUpdate(this);
 		}
 
 		public void OnDestroy()
         {
-			TileManager.UnegisterTile(this);
+			_tileManagerService.UnregisterTile(this);
         }
 
 		#region[config, veins and biome stuff]
@@ -81,7 +86,7 @@ namespace Mineshafts.Components
 		public void UpdateNear()
         {
 			var t = transform;
-			var nearTiles = Util.GetTilesInArea(t.position, 3);
+			var nearTiles = _tileService.GetTilesInArea(t.position, 3);
 			nearTiles.ForEach(tile => tile.UpdateAdjacency());
         }
 
@@ -94,9 +99,9 @@ namespace Mineshafts.Components
 			var thisTile = transform;
 			var go = gameObject;
 
-			Util.AlignTransformToGrid(transform);
+			_gridService.AlignTransformToGrid(transform);
 
-			var surroundingTiles = Util.GetTilesInArea(transform.position);
+			var surroundingTiles = _tileService.GetTilesInArea(transform.position);
 
 			//if a tile exists in the same spot destroy this one
 			if (surroundingTiles.Find(s =>

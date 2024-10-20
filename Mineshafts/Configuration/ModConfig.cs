@@ -4,6 +4,8 @@ using System;
 using ServerSync;
 using System.IO;
 using BepInEx;
+using Mineshafts.Interfaces;
+using Mineshafts.Services;
 
 namespace Mineshafts.Configuration
 {
@@ -31,11 +33,13 @@ namespace Mineshafts.Configuration
 
         public static void Setup()
         {
+            var tileManagerService = ServiceLocator.Get<ITileManagerService>();
+
             ModConfig.configString.ValueChanged += () =>
             {
                 LoadConfigs();
                 ModConfig.Localization.InsertLocalization();
-                TileManager.RequestUpdateAll();
+                tileManagerService.RequestUpdateAll();
                 PieceRecipes.ForEach(r => r.Apply());
                 AbandonedMineshaft.Apply();
             };

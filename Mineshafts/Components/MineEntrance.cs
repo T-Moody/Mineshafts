@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Mineshafts.Interfaces;
+using Mineshafts.Services;
+using UnityEngine;
 
 namespace Mineshafts.Components
 {
@@ -8,7 +10,9 @@ namespace Mineshafts.Components
 
         private void OnEnable()
         {
-            if (transform.position.y >= Main.gridMinHeight || alwaysAlign)
+            var gridService = ServiceLocator.Get<IGridService>();
+
+            if (transform.position.y >= gridService.GetGridMinHeight() || alwaysAlign)
             {
                 Align();
             }

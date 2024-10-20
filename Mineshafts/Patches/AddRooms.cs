@@ -1,4 +1,6 @@
 ﻿using HarmonyLib;
+using Mineshafts.Interfaces;
+using Mineshafts.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,9 +37,11 @@ namespace Mineshafts.Patches
             };
 
             List<GameObject> gos = Resources.FindObjectsOfTypeAll<GameObject>().ToList();
+            var assetService = ServiceLocator.Get<IAssetService>();
             if (gos.Find(go => string.Equals(go.name, MS_Rooms, StringComparison.Ordinal)) == null)
             {
-                var bundle = Util.LoadBundle(Main.assetBundleName);
+                var bundle = assetService.LoadMineshaftsAssetBundle();
+
                 var mineshaftRooms = bundle.LoadAsset<GameObject>(MS_Rooms);
 
                 var valheimRoomsParent = gos.Find(go => string.Equals(go.name, "_Rooms", StringComparison.Ordinal)).transform;

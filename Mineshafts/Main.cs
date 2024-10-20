@@ -5,6 +5,8 @@ using System.Reflection;
 using Mineshafts.Configuration;
 using System.IO;
 using System.Linq;
+using Mineshafts.Services;
+using Mineshafts.Interfaces;
 
 namespace Mineshafts
 {
@@ -18,16 +20,28 @@ namespace Mineshafts
 
         public static ManualLogSource log;
 
-        public static int gridSize = 3;
-        public static int gridMaxHeight = Util.RoundToNearestGridPoint(7500); //7500
-        public static int gridMinHeight = Util.RoundToNearestGridPoint(7000); //6999, 7251 center
-
         public static int roomTheme = 1024;
 
-        public static string assetBundleName = "mineshafts";
         public static string configName = GUID + "_1.2" + ".cfg";
 
         public static Localization localizationInstance;
+
+        public Main()
+        {
+            var assetService = new AssetService();
+            var damageService = new DamageService();
+            var gridService = new GridService();
+            var randomService = new RandomService(gridService);
+            var tileService = new TileService(gridService);
+            var tileManagerService = new TileManagerService(tileService);
+
+            ServiceLocator.Register<IAssetService>(assetService);
+            ServiceLocator.Register<IRandomService>(randomService);
+            ServiceLocator.Register<IDamageService>(damageService);
+            ServiceLocator.Register<IGridService>(gridService);
+            ServiceLocator.Register<ITileService>(tileService);
+            ServiceLocator.Register<ITileManagerService>(tileManagerService);
+        }
 
         void Awake()
         {
@@ -39,13 +53,12 @@ namespace Mineshafts
             ModConfig.Setup();
 
             var configSearch = Directory.GetFiles(Paths.ConfigPath, configName, SearchOption.AllDirectories);
-            if(configSearch.Any())
+            if (configSearch.Any())
             {
                 ModConfig.configString.Value = File.ReadAllText(configSearch.First());
             }
             else
             {
-                //using var memStream = new MemoryStream(Properties.Resources.DefaultConfig);
                 var configFileName = assembly.GetManifestResourceNames().Single(str => str.EndsWith("DefaultConfig.cfg"));
                 using var streamReader = new StreamReader(assembly.GetManifestResourceStream(configFileName));
 
@@ -57,7 +70,8 @@ namespace Mineshafts
 
         void FixedUpdate()
         {
-            TileManager.UpdateRequests();
+            var tileManagerService = ServiceLocator.Get<ITileManagerService>();
+            tileManagerService.UpdateRequests();
         }
 
         void OnDestroy()

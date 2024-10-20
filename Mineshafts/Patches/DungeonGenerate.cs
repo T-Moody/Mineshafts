@@ -1,5 +1,7 @@
 ﻿using HarmonyLib;
 using Mineshafts.Configuration;
+using Mineshafts.Interfaces;
+using Mineshafts.Services;
 using System;
 using UnityEngine;
 
@@ -14,9 +16,11 @@ namespace Mineshafts.Patches
         {
             if (__instance.gameObject.name.StartsWith("MS_D", StringComparison.Ordinal))
             {
+                var gridService = ServiceLocator.Get<IGridService>();
+
                 var t = __instance.transform;
-                Util.AlignTransformToGrid(t);
-                t.position = new Vector3(t.position.x, Util.GetInitialHeight(), t.position.z);
+                gridService.AlignTransformToGrid(t);
+                t.position = new Vector3(t.position.x, gridService.GetInitialHeight(), t.position.z);
 
                 __instance.m_minRooms = ModConfig.AbandonedMineshaft.rooms;
                 __instance.m_maxRooms = ModConfig.AbandonedMineshaft.rooms;

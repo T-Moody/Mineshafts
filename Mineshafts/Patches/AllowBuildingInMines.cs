@@ -1,4 +1,6 @@
 ﻿using HarmonyLib;
+using Mineshafts.Interfaces;
+using Mineshafts.Services;
 
 namespace Mineshafts.Patches
 {
@@ -12,7 +14,9 @@ namespace Mineshafts.Patches
             var piece = ghost.GetComponent<Piece>();
             var pos = ghost.transform.position.y;
 
-            if (pos > Main.gridMinHeight && pos < Main.gridMaxHeight) piece.m_allowedInDungeons = true;
+            var gridService = ServiceLocator.Get<IGridService>();
+
+            if (pos > gridService.GetGridMinHeight() && pos < gridService.GetGridMaxHeight()) piece.m_allowedInDungeons = true;
         }
     }
 }

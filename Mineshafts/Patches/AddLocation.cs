@@ -1,4 +1,6 @@
 ﻿using HarmonyLib;
+using Mineshafts.Interfaces;
+using Mineshafts.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +11,11 @@ namespace Mineshafts.Patches
     [HarmonyPatch(typeof(ZoneSystem), nameof(ZoneSystem.SetupLocations))]
     public static class AddLocation
     {
+        [HarmonyPostfix]
         public static void PostFix(ZoneSystem __instance)
         {
+            var assetService = ServiceLocator.Get<IAssetService>();
+
             if (__instance == null)
             {
                 Debug.LogError("ZoneSystem instance is null");
@@ -28,7 +33,8 @@ namespace Mineshafts.Patches
 
             if (gos.Find(go => string.Equals(go.name, msLocationsName, StringComparison.Ordinal)) == null)
             {
-                var bundle = Util.LoadBundle(Main.assetBundleName);
+                var bundle = assetService.LoadMineshaftsAssetBundle();
+
                 if (bundle == null)
                 {
                     Debug.LogError("Asset bundle is null");
