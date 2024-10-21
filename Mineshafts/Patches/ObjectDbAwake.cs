@@ -1,5 +1,7 @@
 ﻿using HarmonyLib;
 using Mineshafts.Configuration;
+using Mineshafts.Interfaces;
+using Mineshafts.Services;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +12,9 @@ namespace Mineshafts.Patches
     {
         public static void Postfix(ObjectDB __instance)
         {
-            var bundle = Util.LoadBundle(Main.assetBundleName);
+            var assetService = ServiceLocator.Get<IAssetService>();
+
+            var bundle = assetService.LoadMineshaftsAssetBundle();
 
             if(ZNetScene.instance != null)
             {

@@ -1,225 +1,234 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-	<PropertyGroup>
-		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-		<ProjectGuid>{0204FD55-3A2C-4721-86EC-0BA20F96C19F}</ProjectGuid>
-		<OutputType>Library</OutputType>
-		<AppDesignerFolder>Properties</AppDesignerFolder>
-		<RootNamespace>Mineshafts</RootNamespace>
-		<AssemblyName>Mineshafts</AssemblyName>
-		<TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
-		<FileAlignment>512</FileAlignment>
-		<Deterministic>true</Deterministic>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<DebugSymbols>true</DebugSymbols>
-		<DebugType>full</DebugType>
-		<Optimize>false</Optimize>
-		<OutputPath>bin\Debug\</OutputPath>
-		<DefineConstants>DEBUG;TRACE</DefineConstants>
-		<ErrorReport>prompt</ErrorReport>
-		<WarningLevel>4</WarningLevel>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<DebugType>pdbonly</DebugType>
-		<Optimize>true</Optimize>
-		<OutputPath>bin\Release\</OutputPath>
-		<DefineConstants>TRACE</DefineConstants>
-		<ErrorReport>prompt</ErrorReport>
-		<WarningLevel>4</WarningLevel>
-	</PropertyGroup>
-	<PropertyGroup>
-		<Version>1.0.7</Version>
-		<LangVersion>10</LangVersion>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<Nullable>enable</Nullable>
-	</PropertyGroup>
-	<ItemGroup>
-		<EmbeddedResource Include="Resources\mineshafts" />
-	</ItemGroup>
-	<ItemGroup>
-		<!-- <Reference Include="ServerSync">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0204FD55-3A2C-4721-86EC-0BA20F96C19F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mineshafts</RootNamespace>
+    <AssemblyName>Mineshafts</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Version>1.0.7</Version>
+    <LangVersion>10</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\mineshafts" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- <Reference Include="ServerSync">
       <HintPath>..\valheim_references_additional\ServerSync.dll</HintPath>
     </Reference>
     <Reference Include="ShaderReplacer">
       <HintPath>..\valheim_references_additional\ShaderReplacer.dll</HintPath>
     </Reference> -->
-		<Reference Include="System" />
-		<Reference Include="System.Core" />
-		<Reference Include="System.Numerics" />
-		<Reference Include="System.Xml.Linq" />
-		<Reference Include="System.Data.DataSetExtensions" />
-		<Reference Include="Microsoft.CSharp" />
-		<Reference Include="System.Data" />
-		<Reference Include="System.Net.Http" />
-		<Reference Include="System.Xml" />
-
-		<Reference Include="0Harmony">
-			<HintPath>..\libs\BepInEx\core\0Harmony.dll</HintPath>
-		</Reference>
-		<Reference Include="assembly_guiutils_publicized">
-			<HintPath>..\libs\publicized_assemblies\assembly_guiutils_publicized.dll</HintPath>
-		</Reference>
-		<Reference Include="assembly_utils_publicized">
-			<HintPath>..\libs\publicized_assemblies\assembly_utils_publicized.dll</HintPath>
-		</Reference>
-		<Reference Include="assembly_valheim_publicized">
-			<HintPath>..\libs\publicized_assemblies\assembly_valheim_publicized.dll</HintPath>
-		</Reference>
-		<Reference Include="BepInEx">
-			<HintPath>..\libs\BepInEx\core\BepInEx.dll</HintPath>
-		</Reference>
-		<Reference Include="UnityEngine">
-			<HintPath>..\libs\unstripped_corlib\UnityEngine.dll</HintPath>
-		</Reference>
-		<Reference Include="UnityEngine.AssetBundleModule">
-			<HintPath>..\libs\unstripped_corlib\UnityEngine.AssetBundleModule.dll</HintPath>
-		</Reference>
-		<Reference Include="UnityEngine.CoreModule">
-			<HintPath>..\libs\unstripped_corlib\UnityEngine.CoreModule.dll</HintPath>
-		</Reference>
-		<Reference Include="UnityEngine.InputLegacyModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-			<SpecificVersion>False</SpecificVersion>
-			<HintPath>..\libs\unstripped_corlib\UnityEngine.InputLegacyModule.dll</HintPath>
-		</Reference>
-		<Reference Include="UnityEngine.InputModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-			<SpecificVersion>False</SpecificVersion>
-			<HintPath>..\libs\unstripped_corlib\UnityEngine.InputModule.dll</HintPath>
-		</Reference>
-		<Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-			<SpecificVersion>False</SpecificVersion>
-			<HintPath>..\libs\unstripped_corlib\UnityEngine.PhysicsModule.dll</HintPath>
-		</Reference>
-		<Reference Include="UnityEngine.UI">
-			<HintPath>..\libs\unstripped_corlib\UnityEngine.UI.dll</HintPath>
-		</Reference>
-		
-	</ItemGroup>
-	<ItemGroup>
-		<Compile Include="Components\MineEntrance.cs" />
-		<Compile Include="Components\MineExit.cs" />
-		<Compile Include="Components\MineTile.cs" />
-		<Compile Include="Components\MineTileDestructible.cs" />
-		<Compile Include="Components\PieceOnBuiltSwitch.cs" />
-		<Compile Include="Components\PlayerBlackbox.cs" />
-		<Compile Include="Configuration\AbandonedMineshaftConfig.cs" />
-		<Compile Include="Configuration\ConfigParser.cs" />
-		<Compile Include="Configuration\DropConfig.cs" />
-		<Compile Include="Configuration\GeneralConfig.cs" />
-		<Compile Include="Configuration\LocalizationConfig.cs" />
-		<Compile Include="Configuration\ModConfig.cs" />
-		<Compile Include="Configuration\PieceRecipeConfig.cs" />
-		<Compile Include="Configuration\VeinConfig.cs" />
-		<Compile Include="Main.cs" />
-		<Compile Include="Patches\AddEnv.cs" />
-		<Compile Include="Patches\AddLocation.cs" />
-		<Compile Include="Patches\AddRooms.cs" />
-		<Compile Include="Patches\AllowBuildingInMines.cs" />
-		<Compile Include="Patches\AttachBlackbox.cs" />
-		<Compile Include="Patches\DungeonGenerate.cs" />
-		<Compile Include="Patches\GetLocalizationInstance.cs" />
-		<Compile Include="Patches\MineWallHitAdjustment.cs" />
-		<Compile Include="Patches\ObjectDbAwake.cs" />
-		<Compile Include="Patches\PreventEnvSpam.cs" />
-		<Compile Include="Patches\RaisePathfindingHeightLimit.cs" />
-		<Compile Include="Patches\SetupAvailableRooms.cs" />
-		<Compile Include="Properties\AssemblyInfo.cs" />
-		<Compile Include="ReferenceFixer.cs" />
-		<Compile Include="ServerSync.cs" />
-		<Compile Include="ShaderReplacer.cs" />
-		<Compile Include="TileManager.cs" />
-		<Compile Include="Util.cs" />
-	</ItemGroup>
-	<ItemGroup>
-		<Content Include=".gitattributes" />
-		<Content Include=".gitignore" />
-		<Content Include="libs\BepInEx\core\0Harmony.dll" />
-		<Content Include="libs\BepInEx\core\BepInEx.dll" />
-		<Content Include="libs\publicized_assemblies\assembly_guiutils_publicized.dll" />
-		<Content Include="libs\publicized_assemblies\assembly_utils_publicized.dll" />
-		<Content Include="libs\publicized_assemblies\assembly_valheim_publicized.dll" />
-		<Content Include="libs\unstripped_corlib\Mono.Posix.dll" />
-		<Content Include="libs\unstripped_corlib\Mono.Security.dll" />
-		<Content Include="libs\unstripped_corlib\mscorlib.dll" />
-		<Content Include="libs\unstripped_corlib\System.Configuration.dll" />
-		<Content Include="libs\unstripped_corlib\System.Core.dll" />
-		<Content Include="libs\unstripped_corlib\System.dll" />
-		<Content Include="libs\unstripped_corlib\System.Numerics.dll" />
-		<Content Include="libs\unstripped_corlib\System.Security.dll" />
-		<Content Include="libs\unstripped_corlib\System.Xml.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.AccessibilityModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.AIModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.AndroidJNIModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.AnimationModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.ARModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.AssetBundleModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.AudioModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.ClothModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.ClusterInputModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.ClusterRendererModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.CoreModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.CrashReportingModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.DirectorModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.DSPGraphModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.GameCenterModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.GridModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.HotReloadModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.ImageConversionModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.IMGUIModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.InputLegacyModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.InputModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.JSONSerializeModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.LocalizationModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.ParticleSystemModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.PerformanceReportingModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.Physics2DModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.PhysicsModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.ProfilerModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.ScreenCaptureModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.SharedInternalsModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.SpriteMaskModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.SpriteShapeModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.StreamingModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.SubstanceModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.SubsystemsModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.TerrainModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.TerrainPhysicsModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.TextCoreModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.TextRenderingModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.TilemapModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.TLSModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.UI.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.UIElementsModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.UIModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.UmbraModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.UNETModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.UnityAnalyticsModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.UnityConnectModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.UnityTestProtocolModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.UnityWebRequestAssetBundleModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.UnityWebRequestAudioModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.UnityWebRequestModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.UnityWebRequestTextureModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.UnityWebRequestWWWModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.VehiclesModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.VFXModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.VideoModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.VRModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.WindModule.dll" />
-		<Content Include="libs\unstripped_corlib\UnityEngine.XRModule.dll" />
-	</ItemGroup>
-	<ItemGroup>
-		<None Include="Configuration\DefaultConfig.cfg" />
-		<None Include="LICENSE" />
-		<None Include="README.md" />
-	</ItemGroup>
-	<ItemGroup>
-		<Folder Include="libs\unstripped_managed\" />
-	</ItemGroup>
-	<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="0Harmony">
+      <HintPath>..\libs\BepInEx\core\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="assembly_guiutils_publicized">
+      <HintPath>..\libs\publicized_assemblies\assembly_guiutils_publicized.dll</HintPath>
+    </Reference>
+    <Reference Include="assembly_utils_publicized">
+      <HintPath>..\libs\publicized_assemblies\assembly_utils_publicized.dll</HintPath>
+    </Reference>
+    <Reference Include="assembly_valheim_publicized">
+      <HintPath>..\libs\publicized_assemblies\assembly_valheim_publicized.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>..\libs\BepInEx\core\BepInEx.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\libs\unstripped_corlib\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>..\libs\unstripped_corlib\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\libs\unstripped_corlib\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\unstripped_corlib\UnityEngine.InputLegacyModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\unstripped_corlib\UnityEngine.InputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\unstripped_corlib\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\libs\unstripped_corlib\UnityEngine.UI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Components\MineEntrance.cs" />
+    <Compile Include="Components\MineExit.cs" />
+    <Compile Include="Components\MineTile.cs" />
+    <Compile Include="Components\MineTileDestructible.cs" />
+    <Compile Include="Components\PieceOnBuiltSwitch.cs" />
+    <Compile Include="Components\PlayerBlackbox.cs" />
+    <Compile Include="Configuration\AbandonedMineshaftConfig.cs" />
+    <Compile Include="Configuration\ConfigParser.cs" />
+    <Compile Include="Configuration\DropConfig.cs" />
+    <Compile Include="Configuration\GeneralConfig.cs" />
+    <Compile Include="Configuration\LocalizationConfig.cs" />
+    <Compile Include="Configuration\ModConfig.cs" />
+    <Compile Include="Configuration\PieceRecipeConfig.cs" />
+    <Compile Include="Configuration\VeinConfig.cs" />
+    <Compile Include="Interfaces\IAssetService.cs" />
+    <Compile Include="Interfaces\IDamageService.cs" />
+    <Compile Include="Interfaces\IGridService.cs" />
+    <Compile Include="Interfaces\IRandomService.cs" />
+    <Compile Include="Interfaces\ITileManagerService.cs" />
+    <Compile Include="Interfaces\ITileService.cs" />
+    <Compile Include="Main.cs" />
+    <Compile Include="Patches\AddEnv.cs" />
+    <Compile Include="Patches\AddLocation.cs" />
+    <Compile Include="Patches\AddRooms.cs" />
+    <Compile Include="Patches\AllowBuildingInMines.cs" />
+    <Compile Include="Patches\AttachBlackbox.cs" />
+    <Compile Include="Patches\DungeonGenerate.cs" />
+    <Compile Include="Patches\GetLocalizationInstance.cs" />
+    <Compile Include="Patches\MineWallHitAdjustment.cs" />
+    <Compile Include="Patches\ObjectDbAwake.cs" />
+    <Compile Include="Patches\PreventEnvSpam.cs" />
+    <Compile Include="Patches\RaisePathfindingHeightLimit.cs" />
+    <Compile Include="Patches\SetupAvailableRooms.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReferenceFixer.cs" />
+    <Compile Include="ServerSync.cs" />
+    <Compile Include="Services\ServiceLocator.cs" />
+    <Compile Include="Services\AssetService.cs" />
+    <Compile Include="Services\DamageService.cs" />
+    <Compile Include="Services\GridService.cs" />
+    <Compile Include="Services\RandomService.cs" />
+    <Compile Include="Services\TileManagerService.cs" />
+    <Compile Include="Services\TileService.cs" />
+    <Compile Include="ShaderReplacer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".gitattributes" />
+    <Content Include=".gitignore" />
+    <Content Include="libs\BepInEx\core\0Harmony.dll" />
+    <Content Include="libs\BepInEx\core\BepInEx.dll" />
+    <Content Include="libs\publicized_assemblies\assembly_guiutils_publicized.dll" />
+    <Content Include="libs\publicized_assemblies\assembly_utils_publicized.dll" />
+    <Content Include="libs\publicized_assemblies\assembly_valheim_publicized.dll" />
+    <Content Include="libs\unstripped_corlib\Mono.Posix.dll" />
+    <Content Include="libs\unstripped_corlib\Mono.Security.dll" />
+    <Content Include="libs\unstripped_corlib\mscorlib.dll" />
+    <Content Include="libs\unstripped_corlib\System.Configuration.dll" />
+    <Content Include="libs\unstripped_corlib\System.Core.dll" />
+    <Content Include="libs\unstripped_corlib\System.dll" />
+    <Content Include="libs\unstripped_corlib\System.Numerics.dll" />
+    <Content Include="libs\unstripped_corlib\System.Security.dll" />
+    <Content Include="libs\unstripped_corlib\System.Xml.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.AccessibilityModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.AIModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.AndroidJNIModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.AnimationModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.ARModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.AssetBundleModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.AudioModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.ClothModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.ClusterInputModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.ClusterRendererModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.CoreModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.CrashReportingModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.DirectorModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.DSPGraphModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.GameCenterModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.GridModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.HotReloadModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.ImageConversionModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.IMGUIModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.InputLegacyModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.InputModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.JSONSerializeModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.LocalizationModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.ParticleSystemModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.PerformanceReportingModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.Physics2DModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.PhysicsModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.ProfilerModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.ScreenCaptureModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.SharedInternalsModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.SpriteMaskModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.SpriteShapeModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.StreamingModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.SubstanceModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.SubsystemsModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.TerrainModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.TerrainPhysicsModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.TextCoreModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.TextRenderingModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.TilemapModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.TLSModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.UI.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.UIElementsModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.UIModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.UmbraModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.UNETModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.UnityAnalyticsModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.UnityConnectModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.UnityTestProtocolModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.UnityWebRequestAssetBundleModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.UnityWebRequestAudioModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.UnityWebRequestModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.UnityWebRequestTextureModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.UnityWebRequestWWWModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.VehiclesModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.VFXModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.VideoModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.VRModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.WindModule.dll" />
+    <Content Include="libs\unstripped_corlib\UnityEngine.XRModule.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Configuration\DefaultConfig.cfg" />
+    <None Include="LICENSE" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="libs\unstripped_managed\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

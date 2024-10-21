@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using Mineshafts.Interfaces;
+using Mineshafts.Services;
+using UnityEngine;
 
 namespace Mineshafts.Components
 {
     public class PlayerBlackbox : MonoBehaviour
     {
+        private readonly IGridService _gridService = ServiceLocator.Get<IGridService>();
         public GameObject box;
         public Transform t;
 
@@ -16,7 +19,7 @@ namespace Mineshafts.Components
 
         void FixedUpdate()
         {
-            if (t.position.y > Main.gridMinHeight && t.position.y < Main.gridMaxHeight)
+            if (t.position.y > _gridService.GetGridMinHeight() && t.position.y < _gridService.GetGridMaxHeight())
             {
                 if (!active)
                 {

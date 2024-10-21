@@ -1,22 +1,20 @@
 ﻿using HarmonyLib;
+using Mineshafts.Interfaces;
+using Mineshafts.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Diagnostics;
 
 namespace Mineshafts.Patches
 {
     [HarmonyPatch(typeof(DungeonDB), nameof(DungeonDB.SetupRooms))]
     public static class AddRooms
     {
-        private static void PostFix(DungeonDB __instance)
+        private static void Prefix(DungeonDB __instance)
         {
-            if (__instance == null)
-            {
-                Debug.LogError("DungeonDB instance is null");
-                return;
-            }
-
+            var assetService = ServiceLocator.Get<IAssetService>();
             var MS_Rooms = "MS_Rooms";
 
             var rooms = new List<string>()
@@ -37,7 +35,7 @@ namespace Mineshafts.Patches
             List<GameObject> gos = Resources.FindObjectsOfTypeAll<GameObject>().ToList();
             if (gos.Find(go => string.Equals(go.name, MS_Rooms, StringComparison.Ordinal)) == null)
             {
-                var bundle = Util.LoadBundle(Main.assetBundleName);
+                var bundle = assetService.LoadMineshaftsAssetBundle();
                 var mineshaftRooms = bundle.LoadAsset<GameObject>(MS_Rooms);
 
                 var valheimRoomsParent = gos.Find(go => string.Equals(go.name, "_Rooms", StringComparison.Ordinal)).transform;

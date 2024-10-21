@@ -3,11 +3,17 @@ using UnityEngine;
 using Mineshafts.Configuration;
 using System.Collections.Generic;
 using System.Linq;
+using Mineshafts.Interfaces;
+using Mineshafts.Services;
 
 namespace Mineshafts.Components
 {
     public class MineTileDestructible : MonoBehaviour, IDestructible
     {
+		private readonly IGridService _gridService = ServiceLocator.Get<IGridService>();
+		private readonly IDamageService _damageService = ServiceLocator.Get<IDamageService>();
+		private readonly ITileManagerService _tileManagerService = ServiceLocator.Get<ITileManagerService>();
+
 		public string zdoName = string.Empty;
 
 		public MineTile parentTile;
@@ -46,16 +52,16 @@ namespace Mineshafts.Components
 			var zdo = parentTile.znview.GetZDO();
 			var t = transform;
 
-			if(t.position.y + Main.gridSize > Main.gridMaxHeight || t.position.y - Main.gridSize < Main.gridMinHeight)
+			if(t.position.y + _gridService.GetGridSize() > _gridService.GetGridMaxHeight() || t.position.y - _gridService.GetGridSize() < _gridService.GetGridMinHeight())
             {
 				DamageText.instance.ShowText(DamageText.TextType.Immune, hit.m_point, 0f, false);
 				return;
 			}
 
-			hit.ApplyResistance(Util.GetPickaxeOnlyDamageMods(), out var type);
+			hit.ApplyResistance(_damageService.GetPickaxeOnlyDamageMods(), out var type);
 			float totalDamage = hit.GetTotalDamage();
 
-			var tileInFrontPos = parentTile.transform.position + t.forward * Main.gridSize;
+			var tileInFrontPos = parentTile.transform.position + t.forward * _gridService.GetGridSize();
 
 			if (hit.m_toolTier < ModConfig.General.min_pickaxe_tier)
 			{
@@ -75,7 +81,7 @@ namespace Mineshafts.Components
 
 			if (currentHealth <= 0f)
 			{
-				TileManager.RequestPlacement(tileInFrontPos);
+				_tileManagerService.RequestPlacement(tileInFrontPos);
 
 				parentTile.onDestroyEffects.ForEach(effect => GameObject.Instantiate(effect, tileInFrontPos, Quaternion.identity));
 
