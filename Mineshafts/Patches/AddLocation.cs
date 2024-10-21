@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Diagnostics;
 
 namespace Mineshafts.Patches
 {
@@ -12,48 +13,18 @@ namespace Mineshafts.Patches
     public static class AddLocation
     {
         [HarmonyPostfix]
-        public static void PostFix(ZoneSystem __instance)
+        public static void Postfix(ZoneSystem __instance)
         {
             var assetService = ServiceLocator.Get<IAssetService>();
-
-            if (__instance == null)
-            {
-                Debug.LogError("ZoneSystem instance is null");
-                return;
-            }
-
             var msLocationsName = "MS_Locations";
 
             List<GameObject> gos = Resources.FindObjectsOfTypeAll<GameObject>().ToList();
-            if (gos == null)
-            {
-                Debug.LogError("GameObject list is null");
-                return;
-            }
-
             if (gos.Find(go => string.Equals(go.name, msLocationsName, StringComparison.Ordinal)) == null)
             {
                 var bundle = assetService.LoadMineshaftsAssetBundle();
-
-                if (bundle == null)
-                {
-                    Debug.LogError("Asset bundle is null");
-                    return;
-                }
-
                 var msLocations = bundle.LoadAsset<GameObject>(msLocationsName);
-                if (msLocations == null)
-                {
-                    Debug.LogError("MS_Locations asset is null");
-                    return;
-                }
 
-                var locationParent = gos.Find(go => string.Equals(go.name, "_Locations", StringComparison.Ordinal))?.transform.Find("Meadows");
-                if (locationParent == null)
-                {
-                    Debug.LogError("Location parent is null");
-                    return;
-                }
+                var locationParent = gos.Find(go => string.Equals(go.name, "_Locations", StringComparison.Ordinal)).transform.Find("Meadows");
 
                 var instantiated = UnityEngine.Object.Instantiate(msLocations, locationParent);
                 instantiated.FixReferences();
@@ -69,6 +40,7 @@ namespace Mineshafts.Patches
                 m_biome = (Heightmap.Biome)Enum.GetValues(typeof(Heightmap.Biome)).Cast<int>().Sum(),
                 m_biomeArea = Heightmap.BiomeArea.Everything,
                 m_quantity = 50,
+                //m_chanceToSpawn = 100,
                 m_minDistanceFromSimilar = 512,
                 m_randomRotation = false,
                 m_maxTerrainDelta = 2,
