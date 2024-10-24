@@ -14,9 +14,9 @@ namespace Mineshafts
     public class Main : BaseUnityPlugin
     {
         public const string MODNAME = "Mineshafts";
-        public const string AUTHOR = "GoldenJude";
+        public const string AUTHOR = "GoldenJude: UpdatedBy TM";
         public const string GUID = AUTHOR + "_" + MODNAME;
-        public const string VERSION = "1.0.7";
+        public const string VERSION = "1.0.8";
 
         public static ManualLogSource log;
 
