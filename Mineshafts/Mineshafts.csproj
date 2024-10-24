@@ -223,7 +223,7 @@
     <Content Include="libs\unstripped_corlib\UnityEngine.XRModule.dll" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Configuration\DefaultConfig.cfg" />
+    <EmbeddedResource Include="Configuration\DefaultConfig.cfg" />
     <None Include="LICENSE" />
     <None Include="README.md" />
   </ItemGroup>

@@ -12,6 +12,7 @@ namespace Mineshafts.Patches
     [HarmonyPatch(typeof(DungeonDB), nameof(DungeonDB.SetupRooms))]
     public static class AddRooms
     {
+        [HarmonyPrefix]
         private static void Prefix(DungeonDB __instance)
         {
             var assetService = ServiceLocator.Get<IAssetService>();
