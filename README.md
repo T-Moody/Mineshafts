@@ -51,6 +51,8 @@ to define a drop the header must start with ``drop_`` followed by anything, for 
 ![pic4](https://cdn.discordapp.com/attachments/818400376255545395/974629195416236092/unknown.png)  
 
 ## Changelog   
+- **1.0.8**  
+fixed pink assets and Ashland weather issue.
 - **1.0.7**  
 fixed error regarding tool tiers  
 updated serversync  
